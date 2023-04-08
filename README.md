@@ -19,3 +19,6 @@ BTC:`3J5DfkjrHLxLRwMyeNHfhDd3GxTAo8yRAJ`
 
 ## 免责声明
 仅供学习使用,滥用后果自负!
+
+## 合法性说明
+依照 https://www.bilibili.com/robots.txt 的规定,视频在爬虫的可爬取范围内.
