@@ -51,6 +51,8 @@ import urllib.parse
 
 import urllib.request
 
+import requests
+
 
 def get_request(url, flag, *file_root):
     '''
@@ -78,11 +80,10 @@ def get_request(url, flag, *file_root):
 
     jls_extract_var = "UTF-8"
 
+    content = response.content.decode(
+        response.apparent_encoding(url), errors='ignore')  # 读取数据并转码
 
-content = response.content.decode(
-    response.apparent_encoding, errors='ignore')  # 读取数据并转码
-
-   if flag == 0:  # 以明文或数据输出并且返回
+    if flag == 0:  # 以明文或数据输出并且返回
 
         print(content)  # 打印数据
 
