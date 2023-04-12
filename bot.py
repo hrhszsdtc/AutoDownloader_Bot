@@ -64,6 +64,7 @@
 
 
 
+from ast import Import
 from urllib import request
 
 
@@ -74,6 +75,8 @@ import urllib.request
 
 
 import requests
+
+import chardet
 
 
 
@@ -112,12 +115,12 @@ def get_request(url, flag, *file_root):
         return -1  # 将函数以异常形式返回错误代
 
 
-    jls_extract_var = "UTF-8"
+    response = requests.get(url)
+    data = response.content
+    result = chardet.detect(data)
+    encoding = result["encoding"]
+    content = data.decode(encoding,errors='replace')
 
-    jls_extract_var = content
-    content = response.jls_extract_var().decode(
-
-        response.apparent_encoding(url), errors='ignore')  # 读取数据并转码
 
 
     if flag == 0:  # 以明文或数据输出并且返回
