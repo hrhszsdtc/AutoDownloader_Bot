@@ -23,7 +23,6 @@
 '''
 
 
-
 #  This program is free software; you can redistribute it and/or modify
 
 
@@ -63,11 +62,6 @@
 #
 
 
-
-from ast import Import
-from urllib import request
-
-
 import urllib.parse
 
 
@@ -77,7 +71,6 @@ import urllib.request
 import requests
 
 import chardet
-
 
 
 def get_request(url, flag, *file_root):
@@ -99,54 +92,38 @@ def get_request(url, flag, *file_root):
     file_root为选填参数,代表请求的数据储存是时的目录,默认为'./'
     '''
 
-
     try:
-
 
         response = request.urlopen(url)
 
-
     except:
-
 
         print('[!]请求URL下的数据异常')
 
-
         return -1  # 将函数以异常形式返回错误代
-
 
     response = requests.get(url)
     data = response.content
     result = chardet.detect(data)
     encoding = result["encoding"]
-    content = data.decode(encoding,errors='replace')
-
-
+    content = data.decode(encoding, errors='replace')
 
     if flag == 0:  # 以明文或数据输出并且返回
 
-
         print(content)  # 打印数据
 
-
         return content  # 返回数据
-
 
     elif flag == 1:  # 将数据写入文件
         root = ''
 
-
         if file_root == None:  # 如果未传递参数
-
 
             root = './'  # 设置为默认目录
 
-
         else:  # 如果传入参数
 
-
             root = file_root  # 设置目录
-
 
         # 获得文件名
         '''
@@ -155,44 +132,30 @@ def get_request(url, flag, *file_root):
 
 		'''
 
-
         # 写入文件
-
 
         file = open(root+filename, 'w')  # 以写的方式打开文件
 
-
         file.write(data)  # 写入数据
 
-
         file.close()  # 关闭文件
-
 
         return 0
 
 
-
 def main():
-
 
     # 获得视频BV号
 
-
     keyword = '1Na4y1T75k'  # input("请输入视频BV号:")
-
 
     # 合成为目标URL
 
-
     url = f'https://www.bilibili.com/video/BV{keyword}/'
-
 
     get_request(url, 0)
 
 
-
 if __name__ == '__main__':
 
-
     main()
-
