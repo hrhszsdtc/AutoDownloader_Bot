@@ -1,5 +1,7 @@
 # BiliDownloader_Bot
-一个解析并下载Bilibili视频的Python爬虫,目前编写正在进行中,且有时可能会在线下测试,Github上会有一定滞后.
+一个解析并下载Bilibili视频的Python爬虫.
+
+目前编写正在进行中,现有代码大多不在main分支,会在代码稳定之后再merge.
 
 ## 编码规范
 
