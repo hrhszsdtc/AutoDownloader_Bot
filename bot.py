@@ -1,5 +1,3 @@
-import urllib.parse
-import urllib.request
 from urllib import request
 
 import chardet  # pip install chardet
@@ -35,11 +33,11 @@ def get_request(url, flag, *file_root):
 
         return -1  # 将函数以异常形式返回错误代
 
-    response = requests.get(url)
-    data = response.content
-    result = chardet.detect(data)
-    encoding = result["encoding"]
-    content = data.decode(encoding, errors='replace')
+    response = requests.get(url)  # 获取响应
+    data = response.content  # 获取响应内容
+    result = chardet.detect(data)  # 计算权重
+    encoding = result["encoding"]  # 获取编码类型
+    content = data.decode(encoding, errors='replace')  # 解码
 
     if flag == 0:  # 以明文或数据输出并且返回
 
