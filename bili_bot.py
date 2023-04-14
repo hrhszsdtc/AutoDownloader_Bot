@@ -18,6 +18,6 @@ user_agent = random.choice(user_agents)
 socks.set_default_proxy(socks.SOCK5, "localhost", 9150)
 socket.socket = socks.socksocket
 
-
+# 主体
 keyword = input("请输入视频BV号:")
 url = f'https://www.bilibili.com/video/BV{keyword}/'
