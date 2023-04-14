@@ -1,11 +1,10 @@
 import random
+import socket
 import urllib.parse
 import urllib.request
-import socket
-import socks # pip install PySocks
 
+import socks  # pip install PySocks
 from bs4 import BeautifulSoup
-
 
 # useragent
 user_agents = []
