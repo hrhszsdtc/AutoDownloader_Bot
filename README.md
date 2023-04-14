@@ -8,6 +8,12 @@
 对于非Python程序并无硬性规定,但最好可以遵守[Google Style Guide](https://google.github.io/styleguide/).  
 此外,本仓库对于是否有注释并无特殊要求,看个人喜好;若有,则应尽量遵守相关PEP文档的规定.
 
+## 文件命名标准
+用于特定网站的视频爬虫应加上前缀:"网站域名_",否则一律视为无效文件,可能会被删除  
+其余启动脚本等请在下方进行备注
+
+### 文件列表
+main.py  启动脚本
 ## 联系作者
 E-mail:`hrhszsdtc@gmail.com`
 
