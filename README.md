@@ -1,5 +1,5 @@
-# BiliDownloader_Bot
-一个解析并下载Bilibili视频的Python爬虫.
+# AutoDownloader_Bot
+一个解析并下载全网视频的Python爬虫.
 
 目前编写正在进行中,现有代码大多不在main分支,会在代码稳定之后再merge.
 
