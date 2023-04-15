@@ -3,6 +3,7 @@
 
 ***当前仍在开发中,具体见2号PR***
 
+
 ## 编码规范
 
 ### 程序编码规范
@@ -29,6 +30,28 @@ BTC:`3J5DfkjrHLxLRwMyeNHfhDd3GxTAo8yRAJ`
 
 ## 彩蛋
 ### `A Python Crawler`
+```
+A Python crawler that doth parse and download 
+The videos of all the web with skill profound.
+With cunning Python code that can dissect And fetch the videos from every site,
+A crawler that doth all the web inspect.
+```
+```
+A Python crawler that can parse and download
+The videos that on the web abound
+With skill and speed it seeks its prey
+And saves them to a folder or a cloud
+
+It knows no limit, no domain or site
+Can stop its quest for visual delight
+It crawls the links, the tags, the scripts
+And extracts the streams with all its might
+
+A Python crawler that can parse and download
+Is like a bard that sings of every land
+It gathers stories, dramas, shows and more
+And shares them with the world at your command
+```
 ```
 A python crawler that doth parse and download
 The videos of all the web with skill profound
@@ -71,5 +94,3 @@ The videos of all the web with skill profound
 A wonder of technology and smart
 A python crawler that doth thrill my heart
 ```
-
-
