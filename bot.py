@@ -1,6 +1,6 @@
 from urllib import request
 
-import chardet  # pip install chardet
+import chardet 
 import requests
 
 
