@@ -19,7 +19,7 @@
 请在使用相关GitHub功能前确保你通读[GitHub 文档](https://docs.github.com/zh),若有不清楚的请联系作者.
 
 ## 联系作者
-E-mail:`hrhszsdtc@gmail.com`
+E-mail:`hrhszsdtc(at)gmail.com`
 
 ## 捐助
 BTC:`3J5DfkjrHLxLRwMyeNHfhDd3GxTAo8yRAJ`
