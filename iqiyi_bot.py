@@ -1,5 +1,5 @@
 #! usr/bin/python3
-#coding:UTF-8
+# coding:UTF-8
 
 import http.client
 import os
@@ -10,159 +10,176 @@ import unittest
 from queue import Queue
 from urllib.parse import urlparse
 
-logging.basicConfig(level = logging.DEBUG,
+logging.basicConfig(level=logging.DEBUG,
 
-format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+                    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
 
-datefmt = '%a, %d %b %Y %H:%M:%S',
+                    datefmt='%a, %d %b %Y %H:%M:%S',
 
-filename = 'Downloader_%s.log' % (time.strftime('%Y-%m-%d')),
+                    filename='Downloader_%s.log' % (time.strftime('%Y-%m-%d')),
 
-filemode = 'a')
+                    filemode='a')
+
 
 class Downloader(object):
 
-'''''文件下载器'''
+    # 文件下载器
 
-url = ''
 
-filename = ''
+    url = ''
+
+    filename = ''
+
 
 def __init__(self, full_url_str, filename):
 
-'''''初始化'''
+    # 初始化
 
-self.url = urlparse(full_url_str)
 
-self.filename = filename
+    self.url = urlparse(full_url_str)
+
+    self.filename = filename
+
 
 def download(self):
 
-'''''执行下载，返回True或False'''
+    '''''执行下载，返回True或False'''
 
-if self.url == '' or self.url == None or self.filename == '' or self.filename == None:
+    if self.url == '' or self.url == None or self.filename == '' or self.filename == None:
 
-logging.error('Invalid parameter for Downloader')
+        logging.error('Invalid parameter for Downloader')
 
-return False
+        return False
 
-successed = False
+        successed = False
 
-conn = None
+        conn = None
 
-if self.url.scheme == 'https':
+    if self.url.scheme == 'https':
 
-conn = http.client.HTTPSConnection(self.url.netloc)
+        conn = http.client.HTTPSConnection(self.url.netloc)
 
-else:
+    else:
 
-conn = http.client.HTTPConnection(self.url.netloc)
+        conn = http.client.HTTPConnection(self.url.netloc)
 
-conn.request('GET', self.url.path)
+        conn.request('GET', self.url.path)
 
-response = conn.getresponse()
+        response = conn.getresponse()
 
-if response.status == 200:
+    if response.status == 200:
 
-total_size = response.getheader('Content-Length')
+        total_size = response.getheader('Content-Length')
 
-total_size = (int)(total_size)
+        total_size = (int)(total_size)
 
-if total_size > 0:
+        if total_size > 0:
 
-finished_size = 0
+        finished_size = 0
 
-file = open(self.filename, 'wb')
+        file = open(self.filename, 'wb')
 
-if file:
+        if file:
 
-progress = Progress()
+        progress = Progress()
 
-progress.start()
+        progress.start()
 
-while not response.closed:
+        while not response.closed:
 
-buffers = response.read(1024)
+        buffers = response.read(1024)
 
-file.write(buffers)
+        file.write(buffers)
 
-finished_size += len(buffers)
+        finished_size += len(buffers)
 
-progress.update(finished_size, total_size)
+        progress.update(finished_size, total_size)
 
-if finished_size >= total_size:
+        if finished_size >= total_size:
 
-break
+        break
 
-# ... end while statment
+        # ... end while statment
 
-file.close()
+        file.close()
 
-progress.stop()
+        progress.stop()
 
-progress.join()
+        progress.join()
 
-else:
+    else:
 
-logging.error('Create local file %s failed' % (self.filename))
+        logging.error('Create local file %s failed' % (self.filename))
 
-# ... end if statment
+        # ... end if statment
 
-else:
+    else:
 
-logging.error('Request file %s size failed' % (self.filename))
+        logging.error('Request file %s size failed' % (self.filename))
 
-# ... end if statment
+        # ... end if statment
 
-else:
+    else:
 
-logging.error('HTTP/HTTPS request failed, status code:%d' % (response.status))
+        logging.error('HTTP/HTTPS request failed, status code:%d' % (response.status))
 
-# ... end if statment
+        # ... end if statment
 
-conn.close()
+        conn.close()
 
-return successed
+        return successed
 
-# ... end download() method
+    # ... end download() method
 
-# ... end Downloader class
+    # ... end Downloader class
+
 
 class DataWriter(threading.Thread):
 
+
 filename = ''
 
-data_dict = {'offset' : 0, 'buffers_byte' : b''}
+data_dict = {'offset': 0, 'buffers_byte': b''}
 
 queue = Queue(128)
 
 __stop = False
 
+
 def __init__(self, filename):
+
 
 self.filename = filename
 
 threading.Thread.__init__(self)
 
-#Override
+# Override
+
 
 def run(self):
+
 
 while not self.__stop:
 
 self.queue.get(True, 1)
 
+
 def put_data(data_dict):
 
-#将data_dict的数据放入队列，data_dict是一个字典，有两个元素：offset是偏移量，buffers_byte是二进制字节串
+    # 将data_dict的数据放入队列，data_dict是一个字典，有两个元素：offset是偏移量，buffers_byte是二进制字节串
+
 
 self.queue.put(data_dict)
 
+
 def stop(self):
+
 
 self.__stop = True
 
+
 class Progress(threading.Thread):
+
 
 interval = 1
 
@@ -174,17 +191,21 @@ old_size = 0
 
 __stop = False
 
-def __init__(self, interval = 0.5):
+
+def __init__(self, interval=0.5):
+
 
 self.interval = interval
 
 threading.Thread.__init__(self)
 
-#Override
+# Override
+
 
 def run(self):
 
-# logging.info(' Total Finished Percent Speed')
+    # logging.info(' Total Finished Percent Speed')
+
 
 print(' Total Finished Percent Speed')
 
@@ -198,7 +219,8 @@ percent = self.finished_size / self.total_size * 100
 
 speed = (self.finished_size - self.old_size) / self.interval
 
-msg = '%12d %12d %10.2f%% %12d' % (self.total_size, self.finished_size, percent, speed)
+msg = '%12d %12d %10.2f%% %12d' % (
+    self.total_size, self.finished_size, percent, speed)
 
 # logging.info(msg)
 
@@ -214,23 +236,32 @@ logging.error('Total size is zero')
 
 # ... end run() method
 
+
 def stop(self):
+
 
 self.__stop = True
 
+
 def update(self, finished_size, total_size):
+
 
 self.finished_size = finished_size
 
 self.total_size = total_size
 
+
 class TestDownloaderFunctions(unittest.TestCase):
+
 
 def setUp(self):
 
+
 print('setUp')
 
+
 def test_download(self):
+
 
 url = 'http://dldir1.qq.com/qqfile/qq/QQ8.4/18376/QQ8.4.exe'
 
@@ -240,7 +271,9 @@ dl = Downloader(url, filename)
 
 dl.download()
 
+
 def tearDown(self):
+
 
 print('tearDown')
 
