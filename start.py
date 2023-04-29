@@ -95,8 +95,7 @@ def un_pack(url):
 
 	#查询是否支持爬取
 	if domain in COULD_DOMAIN == False:
-		print(f'[!]抱歉,该域名下[({doamin}) from (\
-{url})的资源暂时不支持爬取!')
+		print(f'[!]抱歉,该域名下[({doamin}) from ({url})的资源暂时不支持爬取!')
 		return
     #获取域名
 
@@ -108,9 +107,7 @@ def main(mode,*url):
 		url = ''
 
 		#主界面
-		print(f'{cutline}\n\n\n\
-{ZZH}\n\n\n\
-{cutline}\n')		#打印ZZH图标
+		print(f'{cutline}\n\n\n{ZZH}\n\n\n{cutline}\n')		#打印ZZH图标
 		print('\t:)Tip:输入exit退出,输入url地址开始爬取')
 		while True:
 			flag = 1
@@ -127,13 +124,10 @@ def main(mode,*url):
 			
 			#如果异常
 			except urllib.request.URLError as e:
-				print(f"\033[0;33m[!]URL不可用!\n\033[0m\
-\033[0;31m  :){e}\033[0m")
+				print(f"\033[0;33m[!]URL不可用!\n\033[0m\033[0;31m  :){e}\033[0m")
 				flag = 0
 			except Exception as e:
-				print(f'-----------------------\
-----\033[0;31mErrors\033[0m----------------------\
------\n\t\033[0;31m{e}\033[0m\n\n')
+				print(f'---------------------------\033[0;31mErrors\033[0m---------------------------\n\t\033[0;31m{e}\033[0m\n\n')
 				flag = 0
 			#如果可用
 			if flag == 1:
@@ -151,12 +145,8 @@ if __name__ == '__main__':
 	try:
 		if main(0) == None:
 			print("\f\f:)程序非正常退出,可能是崩溃了!")
-			print('\t请向ZZH20081023@163.com发送标题为"Bu\
-g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
-的反馈!')
+			print('\t请向ZZH20081023@163.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!')
 	except Exception as e:
 		print(f"{e}\f\f:)程序非正常退出,可能是崩溃了!")
-		print('\t请向ZZH20081023@163.com发送标题为"Bu\
-g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
-的反馈!')
+		print('\t请向ZZH20081023@163.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!')
 #未完成
