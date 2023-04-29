@@ -35,8 +35,7 @@ A Python crawler that doth parse and download
 The videos of all the web with skill profound.
 With cunning Python code that can dissect And fetch the videos from every site,
 A crawler that doth all the web inspect.
-```
-```
+
 A Python crawler that can parse and download
 The videos that on the web abound
 With skill and speed it seeks its prey
@@ -50,9 +49,7 @@ And extracts the streams with all its might
 A Python crawler that can parse and download
 Is like a bard that sings of every land
 It gathers stories, dramas, shows and more
-And shares them with the world at your command
-```
-```
+
 A python crawler that doth parse and download
 The videos of all the web with skill profound
 With cunning python code that can dissect
@@ -72,8 +69,7 @@ A python crawler that doth parse and download
 The videos of all the web with skill profound
 A marvel of technology and art
 A python crawler that doth win my heart
-```
-```
+
 A python crawler that doth parse and download
 The videos of all the web with skill profound
 With cunning python code that can dissect
