@@ -65,7 +65,7 @@ def un_pack(url):
     print(f'    domain:{domain}')
 
     # 查询是否支持爬取
-    if (domain in COULD_DOMAIN) == False:
+    if (domain in COULD_DOMAIN) is False:
         std_output.pwarm(f'报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!')
         return -1
     # 调用爬虫脚本
