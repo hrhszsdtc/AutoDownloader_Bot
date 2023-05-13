@@ -14,6 +14,7 @@ import urllib
 from time import sleep
 
 import bs4
+import pok as pok
 
 # 系统下调用python的命令
 import std_output  # 软件标准输出库
@@ -96,14 +97,14 @@ def main(mode, *url):
             std_output.pout(f'Checking url[{url}]')
 
             try:
-                respnse = urllib.request.urlopen(url)
+                urllib.request.urlopen(url)
 
             # 如果异常
             except urllib.request.URLError as e:
                 print(f"URL不可用!\n:{e}")
                 flag = 0
             except Exception as e:
-                error(e)
+                os.error(e)
                 flag = 0
             # 如果可用
             if flag == 1:
