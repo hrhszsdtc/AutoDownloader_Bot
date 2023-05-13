@@ -1,4 +1,5 @@
 #! usr/bin/python3
+# coding=utf-8
 #代码灰常简单，注释就不写了
 
 def pout(str):
