@@ -1,23 +1,19 @@
 #! usr/bin/python3
 # coding:UTF-8
 
-'''
+"""
 download_bot 主进程
 
-'''
+"""
 
 # by ZZH
 
 import os
-import re
 import urllib
-from time import sleep
 
-import bs4
-import pok as pok
+import std_output
 
 # 系统下调用python的命令
-import std_output  # 软件标准输出库
 
 PYTHON_COM = 'python3'
 
@@ -54,11 +50,10 @@ def un_pack(url):
         i = 7
     temp = ''  # 清空缓存
     while True:
-        ch = url[i]
-        if ch == '/':
+        ch_ar = url[i]
+        if ch_ar == '/':
             break
-        else:
-            temp += ch
+        temp += ch_ar
         i += 1
 
     # 打印分析出的域名
