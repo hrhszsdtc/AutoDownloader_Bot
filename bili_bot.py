@@ -2,7 +2,6 @@ import random
 import socket
 
 import socks
-import socksocket
 
 # useragent
 with open('./conf/user_agents.txt') as f:
@@ -12,13 +11,11 @@ with open('./conf/user_agents.txt') as f:
 
 user_agent = random.choice([])
 
-
 # proxy(needs tor service)
 
 socks.set_default_proxy(socks.SOCK5, "localhost", 9150)
 
 socket.socket = socks.socksocket
-
 
 # 主体
 

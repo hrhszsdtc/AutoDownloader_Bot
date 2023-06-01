@@ -2,12 +2,8 @@
 # coding:UTF-8
 
 import http.client
-import os
-import threading
-import time
 import logging
-import unittest
-from queue import Queue
+import time
 from urllib.parse import urlparse
 
 logging.basicConfig(level=logging.DEBUG,
@@ -22,9 +18,7 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 class Downloader(object):
-
     # 文件下载器
-
 
     url = ''
 
@@ -32,9 +26,7 @@ class Downloader(object):
 
 
 def __init__(self, full_url_str, filename):
-
     # 初始化
-
 
     self.url = urlparse(full_url_str)
 
@@ -42,11 +34,9 @@ def __init__(self, full_url_str, filename):
 
 
 def download(self):
-
     '''''执行下载，返回True或False'''
 
     if self.url == '' or self.url == None or self.filename == '' or self.filename == None:
-
         logging.error('Invalid parameter for Downloader')
 
         return False
@@ -115,23 +105,23 @@ def download(self):
 
     else:
 
-        logging.error('Request file %s size failed' % (self.filename))
+    logging.error('Request file %s size failed' % (self.filename))
 
-        # ... end if statment
+    # ... end if statment
 
-    else:
+else:
 
-        logging.error('HTTP/HTTPS request failed, status code:%d' % (response.status))
+logging.error('HTTP/HTTPS request failed, status code:%d' % (response.status))
 
-        # ... end if statment
+# ... end if statment
 
-        conn.close()
+conn.close()
 
-        return successed
+return successed
 
-    # ... end download() method
+# ... end download() method
 
-    # ... end Downloader class
+# ... end Downloader class
 
 
 class DataWriter(threading.Thread):
@@ -153,6 +143,7 @@ self.filename = filename
 
 threading.Thread.__init__(self)
 
+
 # Override
 
 
@@ -166,7 +157,8 @@ self.queue.get(True, 1)
 
 def put_data(data_dict):
 
-    # 将data_dict的数据放入队列，data_dict是一个字典，有两个元素：offset是偏移量，buffers_byte是二进制字节串
+
+# 将data_dict的数据放入队列，data_dict是一个字典，有两个元素：offset是偏移量，buffers_byte是二进制字节串
 
 
 self.queue.put(data_dict)
@@ -199,12 +191,14 @@ self.interval = interval
 
 threading.Thread.__init__(self)
 
+
 # Override
 
 
 def run(self):
 
-    # logging.info(' Total Finished Percent Speed')
+
+# logging.info(' Total Finished Percent Speed')
 
 
 print(' Total Finished Percent Speed')
@@ -231,6 +225,7 @@ self.old_size = self.finished_size
 else:
 
 logging.error('Total size is zero')
+
 
 # ... end while statment
 
