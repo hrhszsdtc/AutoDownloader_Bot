@@ -12,7 +12,8 @@ import os
 import tkinter as tk
 import urllib
 
-from std_output import *  # 软件标准输出库
+# To ZZH:没记错的话from module_name import *是导入类用的,而且用函数的时候函数前要要加上模块名的
+import std_output  # 软件标准输出库
 
 # 系统下调用python的命令
 PYTHON_COM = 'python3'
@@ -43,7 +44,7 @@ ZZH = "\
 
 def un_pack(url):
     print('\n')
-    pout(f"正在解析:[{url}]")
+    std_output.pout(f"正在解析:[{url}]")
 
     # 解析url
     temp = url[0:10]
@@ -65,6 +66,7 @@ def un_pack(url):
     # 解析url
 
 
+# ToZZH:这往后一共4个url不知道干嘛的,自己改!
 temp = url[0:10]
 i = 0
 if 'https://' in temp:  # 如果是https
@@ -84,8 +86,9 @@ while True:
     print(f'    domain:{domain}')
 
     # 查询是否支持爬取
-    if (domain in COULD_DOMAIN) == False:
-        pwarm(f'报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!')
+    if not (domain in COULD_DOMAIN):
+        std_output.pwarm(f'报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!')
+        # To ZZH:没函数你这return用的就很灵性,自己改!!!!
         return -1
     # 调用爬虫脚本
     os.system(f"{PYTHON_COM} {domain}_bot.py {url}")
@@ -113,9 +116,10 @@ def main(mode, *url):
                 return 0  # 正常退出
 
             # 检查URL是否可用
-            pout(f'Checking url[{url}]')
+            std_output.pout(f'Checking url[{url}]')
 
             try:
+                # To ZZH:这个局部变量拿来干嘛的?
                 respnse = urllib.request.urlopen(url)
 
             # 如果异常
@@ -123,11 +127,11 @@ def main(mode, *url):
                 print(f"URL不可用!\n:{e}")
                 flag = 0
             except Exception as e:
-                error(e)
+                std_output.error(e)
                 flag = 0
             # 如果可用
             if flag == 1:
-                pok('URL Checking Over')
+                std_output.pok('URL Checking Over')
 
                 # 爬取
                 print('[*]Spider Start-up')
@@ -173,7 +177,7 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
 
     elif mode == 'nogui':
         try:
-            if main(0) == None:
+            if main(0) is None:
                 print(":)程序非正常退出,可能是崩溃了!")
                 print('请向ZZH20081023@163.com发送标题为"Bu\
 g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
@@ -185,7 +189,7 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
 的反馈!')
 
     elif not (mode in command):
-        pwarm(f"没有叫做{mode}的模式!")
+        std_output.pwarm(f"没有叫做{mode}的模式!")
         start_gui()
 
     else:
