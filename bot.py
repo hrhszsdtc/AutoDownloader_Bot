@@ -1,5 +1,13 @@
 #! usr/bin/python3
 # coding:UTF-8
+import os
+import sys
+import time
+import tkinter as tk
+import urllib
+import urllib.request
+from pickle import dump, load
+from urllib import request
 
 """
 download_bot 主进程
@@ -8,14 +16,14 @@ ZZH Studio
 
 """
  "##################################################################
-							Change Log
+                    Change Log
 2023/05/02 V0.0.0_00 简易的命令行版
 2023/05/03 V0.0.0_01 完善了基本代码
 2023/05/21 V0.0.1_00 写入了GUI界面
 2023/05/22 V0.0.1_01 完善了GUI界面
 2023/05/27 V0.0.1_02 添加语言文件，支持多国语言
 2023/05/28 V0.0.1_03 修复了部分情况下异常但未被捕捉到的BUG，并完善
-					 了语言支持
+                    了语言支持
 ##################################################################
 """
 # V0.0 Alpha
@@ -30,15 +38,10 @@ ZZH Studio
 """
 脚本设置
 """
-import os
-import sys
-import time
-import tkinter as tk
+
+
 # 系统下调用python的命令
-import urllib
-import urllib.request
-from pickle import dump, load
-from urllib import request
+
 
 PYTHON_COM = "python"
 # 系统类型，填1代表'WINDOWS'，填2'LINUX'或'UNIX'
@@ -172,7 +175,7 @@ class Language(object):
 
             i += 1
 
-        # 导入语言
+        # 导入语言(To ZZH:这边一堆局部变量没用到你自己解决)
         _PARSING = data[0]
         _DOMAIN = data[1]
         _DO_NOT_ABLE_TO_GET1 = data[2]
@@ -196,7 +199,7 @@ class Language(object):
         print(f">>{data}")
 
         if type(data) != "<class 'list'>":
-            pwarm(f"data isn't a list")
+            pwarm("data isn't a list")
 
             # 返回异常代码
             return -1
@@ -297,7 +300,7 @@ def un_pack(url):
     print(f"    domain:{domain}")
 
     # 查询是否支持爬取
-    if (domain in COULD_DOMAIN) == False:
+    if not (domain in COULD_DOMAIN):
         pwarm(f"报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!")
         return -1
     # 调用爬虫脚本
@@ -386,7 +389,7 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
 
     elif mode == "nogui":
         try:
-            if main(0) == None:
+            if main(0) is None:
                 print(":)程序非正常退出,可能是崩溃了!")
                 print(
                     '请向ZZH20081023@163.com发送标题为"Bu\
