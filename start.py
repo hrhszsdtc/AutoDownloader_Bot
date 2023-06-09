@@ -12,7 +12,6 @@ import os
 import tkinter as tk
 import urllib
 
-# To ZZH:没记错的话from module_name import *是导入类用的,而且用函数的时候函数前要要加上模块名的
 import std_output  # 软件标准输出库
 
 # 系统下调用python的命令
