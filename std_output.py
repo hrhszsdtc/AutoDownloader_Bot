@@ -1,8 +1,5 @@
 #! usr/bin/python3
 # coding=utf-8
-# 代码灰常简单，注释就不写了
-# To ZZH:模块里不能有其他代码的!
-
 
 def log(str):
     LOG_FILE = "./log"

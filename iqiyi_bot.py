@@ -65,19 +65,16 @@ def download(self):
             total_size = (int)(total_size)
 
             if total_size > 0:
-
                 finished_size = 0
 
             file = open(self.filename, 'wb')
 
             if file:
-
                 progress = Progress()
 
             progress.start()
 
             while not response.closed:
-
                 buffers = response.read(1024)
 
             file.write(buffers)
@@ -87,7 +84,6 @@ def download(self):
             progress.update(finished_size, total_size)
 
             if finished_size >= total_size:
-
                 break
 
             # ... end while statment
@@ -119,6 +115,7 @@ logging.error('HTTP/HTTPS request failed, status code:%d' % (response.status))
 conn.close()
 
 return successed
+
 
 # ... end download() method
 

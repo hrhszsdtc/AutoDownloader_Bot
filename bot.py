@@ -7,7 +7,6 @@ import tkinter as tk
 import urllib
 import urllib.request
 from pickle import dump, load
-from urllib import request
 
 """
 download_bot 主进程
@@ -39,14 +38,13 @@ ZZH Studio
 脚本设置
 """
 
-
 # 系统下调用python的命令
 
 
 PYTHON_COM = "python"
-# 系统类型，填1代表'WINDOWS'，填2'LINUX'或'UNIX'
+# 系统类型，填1代表WINDOWS，填2为LINUX或UNIX
 SYSTEM = 1
-if SYSTEM != 1 and SYSTEM != 2:
+if SYSTEM not in {1,2}:
     # 抛出异常退出程序
     sys.exit(1)
 if SYSTEM == 2:
@@ -101,10 +99,10 @@ LOG_FILE = "./log"
 
 
 def log(string):
-    file = open(LOG_FILE, "a")
-    file.write(string)
-    file.close()
-    return string
+    with open(LOG_FILE, "a", encoding="utf-8") as file:
+        file.write(string)
+        file.close()
+        return string
 
 
 def pout(string):
@@ -150,23 +148,24 @@ def pok(string):
 
 # 多语言支持类
 class Language(object):
-    def import_language(a):
-        config_file = open("./configs/languages.conf", "r")
-        lang_file_name = config_file.read()
-        config_file.close()
+    def __int__(self ,data):
+        self.data = data
+    def import_language(self):
+        with open("./configs/languages.conf", "r", encoding="utf-8") as config_file:
+            lang_file_name = config_file.read()
 
         print(f">>{lang_file_name}")
 
-        with open(lang_file_name, "r") as f:
-            data = load(f)
-        print(f">>{data}")
+        with open(lang_file_name, "r", encoding="utf-8") as f:
+            self.data = load(f)
+        print(f">>{self.data}")
 
         # 检查语言
-        i = len(data) - 1
+        i = len(self.data) - 1
         j = 0
         while j < i:
             try:
-                if data[i] == "":
+                if self.data[i] == "":
                     error("语言文件异常！")
 
             # 如果报错
@@ -175,41 +174,38 @@ class Language(object):
 
             i += 1
 
-        # 导入语言(To ZZH:这边一堆局部变量没用到你自己解决)
-        _PARSING = data[0]
-        _DOMAIN = data[1]
-        _DO_NOT_ABLE_TO_GET1 = data[2]
-        _FROM = data[3]
-        _TIP = data[4]
-        _TIP_TEXT = data[5]
-        _CHECK_URL = data[6]
-        _URL_UNAVAILABLE = data[7]
-        _CHECK_COMPLETED = data[8]
-        _START_SPIDER = data[9]
-        _INPUT_URL_ADDR = data[10]
-        _BREAKDOWN1 = data[11]
-        _BREAKDOWN2 = data[12]
+        # 导入语言
+        _PARSING = self.data[0]
+        _DOMAIN = self.data[1]
+        _DO_NOT_ABLE_TO_GET1 = self.data[2]
+        _FROM = self.data[3]
+        _TIP = self.data[4]
+        _TIP_TEXT = self.data[5]
+        _CHECK_URL = self.data[6]
+        _URL_UNAVAILABLE = self.data[7]
+        _CHECK_COMPLETED = self.data[8]
+        _START_SPIDER = self.data[9]
+        _INPUT_URL_ADDR = self.data[10]
+        _BREAKDOWN1 = self.data[11]
+        _BREAKDOWN2 = self.data[12]
 
-    def compile_lang_file(data, filename):
+    def compile_lang_file(self, filename):
         """
         语言文件生成成员函数
         可以使用次函数生成语言文件，先再目录下创建文件***.lang，然后将完整文件名传入参数
         注意，data必须是list类型，且不可嵌套
         """
-        print(f">>{data}")
+        print(f">>{self.data}")
 
-        if type(data) != "<class 'list'>":
+        if not isinstance(self.data, list):
             pwarm("data isn't a list")
-
-            # 返回异常代码
-            return -1
 
         else:
             try:
-                file = open(filename, "w")
+                with open(filename, "w", encoding="utf-8") as file:
 
-                # 序列化
-                dump(data, file)
+                    # 序列化
+                    dump(self.data, file)
 
             except Exception as e:
                 pwarm(e)
@@ -231,7 +227,6 @@ pok("语言导入成功！")
 
 # 伪装成浏览器(此处伪装成chrome)
 HEADERS = (
-    "User-Agent",
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36",
 )
@@ -261,7 +256,7 @@ def get_content(url_path):
 # 用于获得HTTP响应头和JSON数据
 def get_request(url):
     try:
-        with request.urlopen(url) as f:
+        with urllib.request.urlopen(url) as f:
             data = f.read()
             print(f"Status:{f.status} {f.reason}")
 
@@ -291,8 +286,7 @@ def un_pack(url):
         ch = url[i]
         if ch == "/":
             break
-        else:
-            temp += ch
+        temp += ch
         i += 1
 
     # 打印分析出的域名
@@ -300,7 +294,7 @@ def un_pack(url):
     print(f"    domain:{domain}")
 
     # 查询是否支持爬取
-    if not (domain in COULD_DOMAIN):
+    if domain not in COULD_DOMAIN:
         pwarm(f"报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!")
         return -1
     # 调用爬虫脚本
