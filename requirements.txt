@@ -1,0 +1,4 @@
+pafy
+bs4
+PySocks
+chardet

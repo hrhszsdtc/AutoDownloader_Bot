@@ -1,8 +1,6 @@
 # AutoDownloader_Bot
 一个解析并下载全网视频的Python爬虫.
 
-***当前仍在开发中,具体见2号PR***
-
 
 ## 编码规范
 

@@ -553,6 +553,7 @@ ServiceFabricBackup/
 *.ndf
 
 # Business Intelligence projects
+*.rdl.self
 *.rdl.data
 *.bim.layout
 *.bim_*.settings
