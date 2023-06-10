@@ -1,5 +1,9 @@
+#start.py
+
 #! usr/bin/python3
 # coding:UTF-8
+
+import sqlite3 as sql
 import os
 import sys
 import time
@@ -8,72 +12,29 @@ import urllib
 import urllib.request
 from pickle import dump, load
 
+from constant import *
+from std_output import *
+
 """
 download_bot 主进程
 ZZH Studio
 """
-
 """
- "##################################################################
-                    Change Log
-2023/05/02 V0.0.0_00 简易的命令行版
-2023/05/03 V0.0.0_01 完善了基本代码
-2023/05/21 V0.0.1_00 写入了GUI界面
-2023/05/22 V0.0.1_01 完善了GUI界面
-2023/05/27 V0.0.1_02 添加语言文件，支持多国语言
-2023/05/28 V0.0.1_03 修复了部分情况下异常但未被捕捉到的BUG，并完善
-                    了语言支持
-##################################################################
+ V0.0 Alpha
+     :for test
+
+ BUG report:
+ Email:ZZH20081023@163.com
+ by ZZH
 """
-# V0.0 Alpha
-# for test
-
-# BUG report:
-# Email:ZZH20081023@163.com
-
-
-# by ZZH
 
 """
 脚本设置
 """
 
-# 系统下调用python的命令
-
-
-PYTHON_COM = "python"
-# 系统类型，填1代表WINDOWS，填2为LINUX或UNIX
-SYSTEM = 1
-if SYSTEM not in {1,2}:
-    # 抛出异常退出程序
-    sys.exit(1)
-if SYSTEM == 2:
-    PYTHON_COM = "python3"
 
 # 支持爬取的域名,注:全小写!!!
 COULD_DOMAIN = ["baidu.com", "www.baidu.com", "v.qq.com"]
-
-ZZH = "\
-  __________\t  __________\t ___     ___\n\
- /_________/|\t /_________/|\t/__/|   /__/|\n\
- |_______  |^\t |_______  |^\t|  ||   |  ||\n\
-       /  / / \t       /  / /\t|  ||___|  ||\n\
-     /  / /  \t     /  / /\t|  |/___|  ||\n\
-   /  / /___\t   /  / /___\t|  ______  ||\n\
- /  /______/|\t /  /______/|\t|  ||   |  ||\n\
-|__________|/\t|__________|/\t|  ||   |  ||\n\
-                            \t|__|/   |__|/"
-
-ZZH2 = "\
-  __________\t   __________\t  ___     ___\n\
- /_________/|\t /_________/|\t/__/|   /__/|\n\
- |_______  |^\t |_______  |^\t|  ||   |  ||\n\
-       /  / / \t      /  / /\t|  ||___|  ||\n\
-     /  / /  \t     /  / /\t  |  |/___|  ||\n\
-   /  / /___\t    /  / /___\t |  ______  ||\n\
- /  /______/|\t /  /______/|\t|  ||   |  ||\n\
-|__________|/\t|__________|/\t|  ||   |  ||\n\
-                           \t|__|/   |__|/"
 
 # 初始化语言
 _PARSING = ""
@@ -90,104 +51,18 @@ _INPUT_URL_ADDR = ""
 _BREAKDOWN1 = ""
 _BREAKDOWN2 = ""
 
-# 日志文件名
-LOG_FILE = "./log"
-
-
-# 标准输出函数
-###############################
-
-
-def log(string):
-    with open(LOG_FILE, "a", encoding="utf-8") as file:
-        file.write(string)
-        file.close()
-        return string
-
-
-def pout(string):
-    # 判断系统类型
-    if SYSTEM == 2:
-        print(f"[*]\033[0;33m{string}\033[0m")
-    else:
-        print(f"[*]{string}")
-
-    log(f"[{time.time()}]{string}\n")
-
-
-def pwarm(string):
-    # 判断系统类型
-    if SYSTEM == 2:
-        print(f"\033[0;31m[!]{string}\033[0m")
-    else:
-        print(f"[!]{string}")
-    log(f"[{time.time()}][!]{string}\n")
-
-
-def error(string):
-    # 判断系统类型
-    if SYSTEM == 2:
-        print(f"[\033[0;31mERROR\033[0m]{string}")
-    else:
-        print(f"[ERROR]{string}")
-
-    log(f"[{time.time()}][ERROR]{string}\n")
-
-
-def pok(string):
-    # 判断系统类型
-    if SYSTEM == 2:
-        print(f"[ \033[0;32mOK\033[0m ] {string}")
-    else:
-        print(f"[ ok ]{string}")
-    log(f"[ ok ]{string}\n")
-
-
-###############################
-
-
 # 多语言支持类
 class Language(object):
     def __int__(self ,data):
         self.data = data
+	
     def import_language(self):
         with open("./configs/languages.conf", "r", encoding="utf-8") as config_file:
             lang_file_name = config_file.read()
-
+			
         print(f">>{lang_file_name}")
-
-        with open(lang_file_name, "r", encoding="utf-8") as f:
-            self.data = load(f)
-        print(f">>{self.data}")
-
-        # 检查语言
-        i = len(self.data) - 1
-        j = 0
-        while j < i:
-            try:
-                if self.data[i] == "":
-                    error("语言文件异常！")
-
-            # 如果报错
-            except Exception as e:
-                pwarm(e)
-
-            i += 1
-
-        # 导入语言
-        _PARSING = self.data[0]
-        _DOMAIN = self.data[1]
-        _DO_NOT_ABLE_TO_GET1 = self.data[2]
-        _FROM = self.data[3]
-        _TIP = self.data[4]
-        _TIP_TEXT = self.data[5]
-        _CHECK_URL = self.data[6]
-        _URL_UNAVAILABLE = self.data[7]
-        _CHECK_COMPLETED = self.data[8]
-        _START_SPIDER = self.data[9]
-        _INPUT_URL_ADDR = self.data[10]
-        _BREAKDOWN1 = self.data[11]
-        _BREAKDOWN2 = self.data[12]
+		
+        db = sql.connect(database = lang_file_name)
 
     def compile_lang_file(self, filename):
         """
@@ -218,19 +93,13 @@ try:
 
 except Exception as e:
     error(f"语言导入失败！\n{e}")
-
-    # 抛出异常退出程序
-    sys.exit(1)
-
+	
+    if PROTECT == '1':
+		# 抛出异常退出程序
+        sys.exit(1)
+    
 # 导入成功
 pok("语言导入成功！")
-
-# 伪装成浏览器(此处伪装成chrome)
-HEADERS = (
-    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36",
-)
-
 
 # 取得网页源代码
 def get_content(url_path):
