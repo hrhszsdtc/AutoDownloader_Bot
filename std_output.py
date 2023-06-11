@@ -1,5 +1,5 @@
-#std_output.py
-#coding:utf-8
+# std_output.py
+# coding:utf-8
 
 import sqlite3
 import os
@@ -13,9 +13,11 @@ from pickle import dump, load
 from constant import *
 from std_output import *
 
-'''
+
+"""
 标准输出函数
-'''
+"""
+
 
 def log(string):
     with open(LOG_FILE, "a", encoding="utf-8") as file:
@@ -60,4 +62,3 @@ def pok(string):
     else:
         print(f"[ ok ]{string}")
     log(f"[{time.time()}][ ok ]{string}\n")
-
