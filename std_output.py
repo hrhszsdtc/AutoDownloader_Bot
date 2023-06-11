@@ -1,35 +1,64 @@
-#! usr/bin/python3
-# coding=utf-8
+# std_output.py
+# coding:utf-8
 
-def log(str):
-    LOG_FILE = "./log"
-    file = open(LOG_FILE, "a")
-    file.write(str)
-    file.close()
-    return str
+import sqlite3
+import os
+import sys
+import time
+import tkinter as tk
+import urllib
+import urllib.request
+from pickle import dump, load
 
-
-def pout(str):
-    print(f"[*]\033[0;33m{str}\033[0m")
-    log(f"[*]{str}\n")
-
-
-def pwarm(str):
-    print(f"\033[0;31m[!]{str}\033[0m")
-    log(f"[!]{str}\n")
+from constant import *
+from std_output import *
 
 
-def error(str):
-    print(
-        f"-----------------------\
-----\033[0;31mErrors\033[0m----------------------\
------\n\t\033[0;31m{str}\033[0m\n\n-----------------------\
---------------------------------\
------"
-    )
-    log(f"[ERROR]{str}\n")
+"""
+标准输出函数
+"""
 
 
-def pok(str):
-    print(f"[ \033[0;32mOK\033[0m ] {str}")
-    log(f"[ ok ]{str}\n")
+def log(string):
+    with open(LOG_FILE, "a", encoding="utf-8") as file:
+        file.write(string)
+        file.close()
+        return string
+
+
+def pout(string):
+    # 判断系统类型
+    if SYSTEM == 2:
+        print(f"[*]\033[0;33m{string}\033[0m")
+    else:
+        print(f"[*]{string}")
+
+    log(f"[{time.time()}]{string}\n")
+
+
+def pwarm(string):
+    # 判断系统类型
+    if SYSTEM == 2:
+        print(f"\033[0;31m[!]{string}\033[0m")
+    else:
+        print(f"[!]{string}")
+    log(f"[{time.time()}][!]{string}\n")
+
+
+def error(string):
+    # 判断系统类型
+    if SYSTEM == 2:
+        print(f"[\033[0;31mERROR\033[0m]{string}")
+    else:
+        print(f"[ERROR]{string}")
+
+    log(f"[{time.time()}][ERROR]{string}\n")
+
+
+def pok(string):
+    # 判断系统类型
+    if SYSTEM == 2:
+        print(f"[ \033[0;32mOK\033[0m ] {string}")
+    else:
+        print(f"[ ok ]{string}")
+    log(f"[{time.time()}][ ok ]{string}\n")
