@@ -15,10 +15,10 @@ import urllib
 import std_output  # 软件标准输出库
 
 # 系统下调用python的命令
-PYTHON_COM = 'python3'
+PYTHON_COM = "python3"
 
 # 支持爬取的域名,注:全小写!!!
-COULD_DOMAIN = ['baidu.com', 'www.baidu.com', 'v.qq.com']
+COULD_DOMAIN = ["baidu.com", "www.baidu.com", "v.qq.com"]
 
 ZZH = "\
       __________\t  __________\t       ___    ___\n\
@@ -42,21 +42,21 @@ ZZH = "\
 
 
 def un_pack(url):
-    print('\n')
+    print("\n")
     std_output.pout(f"正在解析:[{url}]")
 
     # 解析url
     temp = url[0:10]
     i = 0
-    if 'https://' in temp:  # 如果是https
+    if "https://" in temp:  # 如果是https
         # 剥离域名
         i = 8
     else:
         i = 7
-    temp = ''  # 清空缓存
+    temp = ""  # 清空缓存
     while True:
         ch = url[i]
-        if ch == '/':
+        if ch == "/":
             break
         else:
             temp += ch
@@ -68,25 +68,25 @@ def un_pack(url):
 # ToZZH:这往后一共4个url不知道干嘛的,自己改!
 temp = url[0:10]
 i = 0
-if 'https://' in temp:  # 如果是https
+if "https://" in temp:  # 如果是https
     # 剥离域名
     i = 8
 else:
     i = 7
-temp = ''  # 清空缓存
+temp = ""  # 清空缓存
 while True:
     ch_ar = url[i]
-    if ch_ar == '/':
+    if ch_ar == "/":
         break
     temp += ch_ar
     i += 1
     # 打印分析出的域名
     domain = temp
-    print(f'    domain:{domain}')
+    print(f"    domain:{domain}")
 
     # 查询是否支持爬取
     if not (domain in COULD_DOMAIN):
-        std_output.pwarm(f'报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!')
+        std_output.pwarm(f"报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!")
         # To ZZH:没函数你这return用的就很灵性,自己改!!!!
         return -1
     # 调用爬虫脚本
@@ -98,26 +98,27 @@ while True:
 
 # 主程序
 def main(mode, *url):
-    cutline = '=' * 60
-    cutline2 = '-' * 60
+    cutline = "=" * 60
+    cutline2 = "-" * 60
     if mode == 0:
-
-        url = ''
+        url = ""
 
         # 主界面
-        print(f'{cutline}\n\n\n\
+        print(
+            f"{cutline}\n\n\n\
 {ZZH}\n\n\n\
-{cutline}\n')  # 打印ZZH图标
-        print('\t:)Tip:输入exit退出,输入url地址开始爬取')
+{cutline}\n"
+        )  # 打印ZZH图标
+        print("\t:)Tip:输入exit退出,输入url地址开始爬取")
         while True:
             flag = 1
-            url = input('URL: ')  # 输入URL
+            url = input("URL: ")  # 输入URL
 
-            if url == 'exit':
+            if url == "exit":
                 return 0  # 正常退出
 
             # 检查URL是否可用
-            std_output.pout(f'Checking url[{url}]')
+            std_output.pout(f"Checking url[{url}]")
 
             try:
                 # To ZZH:这个局部变量拿来干嘛的?
@@ -132,10 +133,10 @@ def main(mode, *url):
                 flag = 0
             # 如果可用
             if flag == 1:
-                std_output.pok('URL Checking Over')
+                std_output.pok("URL Checking Over")
 
                 # 爬取
-                print('[*]Spider Start-up')
+                print("[*]Spider Start-up")
                 un_pack(url)
 
             # 周期结束,打印分割线
@@ -153,7 +154,7 @@ def start_gui():
     text.pack()
 
     # 显示标签控件
-    label = tk.Label(window, width=50, text='要爬取的URL地址:')
+    label = tk.Label(window, width=50, text="要爬取的URL地址:")
     label.pack()
 
     # 显示URL输入框
@@ -164,30 +165,36 @@ def start_gui():
 
 
 def start(mode):
-    command = ['nogui']
+    command = ["nogui"]
 
-    if mode == 'gui':
+    if mode == "gui":
         try:
             start_gui()
 
         except Exception as e:
             print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
-            print('请向ZZH20081023@163.com发送标题为"Bu\
+            print(
+                '请向ZZH20081023@163.com发送标题为"Bu\
 g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
-的反馈!')
+的反馈!'
+            )
 
-    elif mode == 'nogui':
+    elif mode == "nogui":
         try:
             if main(0) is None:
                 print(":)程序非正常退出,可能是崩溃了!")
-                print('请向ZZH20081023@163.com发送标题为"Bu\
+                print(
+                    '请向ZZH20081023@163.com发送标题为"Bu\
 g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
-的反馈!')
+的反馈!'
+                )
         except Exception as e:
             print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
-            print('请向ZZH20081023@163.com发送标题为"Bu\
+            print(
+                '请向ZZH20081023@163.com发送标题为"Bu\
 g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
-的反馈!')
+的反馈!'
+            )
 
     elif not (mode in command):
         std_output.pwarm(f"没有叫做{mode}的模式!")
@@ -198,4 +205,4 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
 
 
 if __name__ == "__main__":
-    start('gui')
+    start("gui")

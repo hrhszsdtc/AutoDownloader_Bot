@@ -4,10 +4,10 @@ import socket
 import socks
 
 # useragent
-with open('./conf/user_agents.txt') as f:
+with open("./conf/user_agents.txt") as f:
     lines = f.readlines()
     for line in lines:
-        ([]).append(line.strip('\n'))
+        ([]).append(line.strip("\n"))
 
 user_agent = random.choice([])
 
@@ -21,4 +21,4 @@ socket.socket = socks.socksocket
 
 keyword = input("请输入视频BV号:")
 
-url = f'https://www.bilibili.com/video/BV{keyword}/'
+url = f"https://www.bilibili.com/video/BV{keyword}/"
