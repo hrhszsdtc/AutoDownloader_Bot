@@ -1,4 +1,4 @@
-#start.py
+# start.py
 
 #! usr/bin/python3
 # coding:UTF-8
@@ -12,8 +12,7 @@ import urllib
 import urllib.request
 from pickle import dump, load
 
-from constant import *
-from std_output import *
+from utils import *
 
 """
 download_bot 主进程
@@ -51,18 +50,19 @@ _INPUT_URL_ADDR = ""
 _BREAKDOWN1 = ""
 _BREAKDOWN2 = ""
 
+
 # 多语言支持类
 class Language(object):
-    def __int__(self ,data):
+    def __int__(self, data):
         self.data = data
-	
+
     def import_language(self):
         with open("./configs/languages.conf", "r", encoding="utf-8") as config_file:
             lang_file_name = config_file.readline()
-			
+
         print(f">>{lang_file_name}")
-		
-        db = sql.connect(database = lang_file_name)
+
+        db = sql.connect(database=lang_file_name)
 
     def compile_lang_file(self, filename):
         """
@@ -78,7 +78,6 @@ class Language(object):
         else:
             try:
                 with open(filename, "w", encoding="utf-8") as file:
-
                     # 序列化
                     dump(self.data, file)
 
@@ -93,13 +92,14 @@ try:
 
 except Exception as e:
     error(f"语言导入失败！\n{e}")
-	
-    if PROTECT == '1':
-		# 抛出异常退出程序
+
+    if PROTECT == "1":
+        # 抛出异常退出程序
         sys.exit(1)
-    
+
 # 导入成功
 pok("语言导入成功！")
+
 
 # 取得网页源代码
 def get_content(url_path):
