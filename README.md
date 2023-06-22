@@ -22,7 +22,7 @@
 `tech-whimsy(at)outlook.com`
 
 * * *
-`Ode to the AutoDownloader`  
+*`Ode to the AutoDownloader`*  
 ```
 AutoDownloader_Bot, a web crawler so nimble,
 Scouring the net, downloading with care.
