@@ -194,7 +194,7 @@ def main(mode, *url):
                 print(f"URL不可用!\n:{e}")
                 flag = 0
             except Exception as e:
-                error(e)
+                perror(e)
                 flag = 0
             # 如果可用
             if flag == 1:
@@ -250,17 +250,11 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
             if main(0) is None:
                 print(":)程序非正常退出,可能是崩溃了!")
                 print(
-                    '请向ZZH20081023@163.com发送标题为"Bu\
-g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
-的反馈!'
+                    '请向ZZH20081023@163.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
                 )
         except Exception as e:
             print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
-            print(
-                '请向ZZH20081023@163.com发送标题为"Bu\
-g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
-的反馈!'
-            )
+            print('请向ZZH20081023@163.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!')
 
     elif not (mode in command):
         pwarm(f"没有叫做{mode}的模式!")

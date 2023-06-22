@@ -12,6 +12,10 @@ import logging  # 引入logging模块
 import os.path
 from datetime import datetime
 
+import logging  # 引入logging模块
+import os.path
+from datetime import datetime
+
 # 创建一个logger
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)  # Log等级总开关
@@ -62,7 +66,7 @@ def pout(string):
     else:
         print(f"[*]{string}")
 
-    log(f"[{time.time()}]{string}\n")
+    info(string)
 
 
 def pwarm(string):
@@ -71,17 +75,17 @@ def pwarm(string):
         print(f"\033[0;31m[!]{string}\033[0m")
     else:
         print(f"[!]{string}")
-    log(f"[{time.time()}][!]{string}\n")
+    warning(string)
 
 
-def error(string):
+def perror(string):
     # 判断系统类型
     if SYSTEM == 2:
         print(f"[\033[0;31mERROR\033[0m]{string}")
     else:
         print(f"[ERROR]{string}")
 
-    log(f"[{time.time()}][ERROR]{string}\n")
+    error(string)
 
 
 def pok(string):
@@ -90,7 +94,7 @@ def pok(string):
         print(f"[ \033[0;32mOK\033[0m ] {string}")
     else:
         print(f"[ ok ]{string}")
-    log(f"[{time.time()}][ ok ]{string}\n")
+    info(string)
 
 
 """
