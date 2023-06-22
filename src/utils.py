@@ -8,17 +8,51 @@ import tkinter as tk
 import urllib
 import urllib.request
 from pickle import dump, load
+import logging  # 引入logging模块
+import os.path
+from datetime import datetime
 
-"""
-标准输出函数
-"""
+# 创建一个logger
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)  # Log等级总开关
+
+# 创建一个handler，用于写入日志文件
+rq = datetime.now().strftime("%Y%m%d")[:None]  # 获取当天的日期，在logs文件夹下每天生成一个日志文件
+log_path = os.path.dirname(os.getcwd()) + "/logs/"
+log_name = log_path + rq + ".log"
+logfile = log_name
+fh = logging.FileHandler(logfile, encoding="utf-8", mode="a+")  # mode的使用见以下Python文件读写
+fh.setLevel(logging.DEBUG)  # 输出到file的log等级的开关
+
+# 定义handler的输出格式
+formatter = logging.Formatter(
+    "%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s"
+)
+fh.setFormatter(formatter)
+
+# 将logger添加到handler里面
+logger.addHandler(fh)
 
 
-def log(string):
-    with open(LOG_FILE, "a", encoding="utf-8") as file:
-        file.write(string)
-        file.close()
-        return string
+# 日志
+def info(msg):
+    logger.info(msg)
+
+
+def debug(msg):
+    logger.debug(msg)
+
+
+def warning(msg):
+    logger.warning(msg)
+
+
+def error(msg):
+    logger.error(msg)
+
+
+def critical(msg):
+    logger.critical(msg)
 
 
 def pout(string):
