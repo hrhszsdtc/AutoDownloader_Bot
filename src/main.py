@@ -8,6 +8,7 @@ import urllib.request
 from pickle import dump, load
 
 from utils import *
+import constants
 
 """
 download_bot 主进程
