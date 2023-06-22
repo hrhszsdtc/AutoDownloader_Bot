@@ -9,9 +9,6 @@ import urllib
 import urllib.request
 from pickle import dump, load
 
-from constant import *
-from std_output import *
-
 """
 标准输出函数
 """

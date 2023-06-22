@@ -1,8 +1,3 @@
-# start.py
-
-#! usr/bin/python3
-# coding:UTF-8
-
 import sqlite3 as sql
 import os
 import sys
