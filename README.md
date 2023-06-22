@@ -23,7 +23,6 @@
 
 * * *
 `Ode to the AutoDownloader`  
-`自动下载器颂`
 ```
 AutoDownloader_Bot, a web crawler so nimble,
 Scouring the net, downloading with care.
@@ -42,22 +41,4 @@ This bot is a hoarder's dream come true for sure!
 
 An impressive instrument with technical might,
 AutoDownloader_Bot downloads day and night.
-```
-```
-自动下载器机器人,网络爬虫如此敏捷,
-细心搜索网络,谨慎下载。
-用简单代码识别视频链接,
-从各个网站检索媒体。
-
-解码破解保护,自动下载器确保没有视频遗漏。
-这是一个强大的工具用于大规模媒体收集,
-这个机器人不会轻视任何流媒体源。
-
-虽然一些人可能反对这样的自动采集,
-自动下载器满足其创造者对更多的渴望。
-不知疲倦地搜索,链接和下载,
-这个机器人对囤积者来说确实是梦想成真!
-
-一个具有技术实力的引人注目的工具,
-自动下载器机器人夜以继日地下载。
 ```
