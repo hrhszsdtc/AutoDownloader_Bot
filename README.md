@@ -2,7 +2,7 @@
 一个解析并下载全网视频的爬虫.
 
 ## 开发状况:***开发中***  
-我们的项目正在由团队的核心成员ZZH主导开发,他在<https://gitcode.net/CN_ZZH/AutoDownloader_Bot>上分享了他的代码和进度.不过,如果您想了解更多的细节和最新的消息,请参考我们在Github上发布的官方信息.
+我们的项目正在由团队的核心成员ZZH主导开发,他在<https://gitcode.net/CN_ZZH/AutoDownloader_Bot>上分享了他的代码和进度.不过,如果您想了解更多的细节和最新的消息,请参考我们在GitHub上发布的官方信息.
 
 ## 编码规范
 
