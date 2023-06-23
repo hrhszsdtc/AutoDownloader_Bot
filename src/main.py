@@ -11,19 +11,6 @@ from utils import *
 import constants
 
 """
-download_bot 主进程
-ZZH Studio
-"""
-"""
- V0.0 Alpha
-     :for test
-
- BUG report:
- Email:ZZH20081023@163.com
- by ZZH
-"""
-
-"""
 脚本设置
 """
 
