@@ -53,7 +53,7 @@ class Language(object):
         self.data = data
 
     def import_language(self):
-        with open("./configs/languages.conf", "r", encoding="utf-8") as config_file:
+        with open("./config/languages.conf", "r", encoding="utf-8") as config_file:
             lang_file_name = config_file.readline()
 
         print(f">>{lang_file_name}")

@@ -67,7 +67,7 @@ HEADERS = (
 LOG_FILE = "../log"
 
 # 脚本保护
-file = open("./configs/protect.conf", "r")
+file = open("./config/protect.conf", "r")
 PROTECT = file.readline()
 if not (PROTECT in {"0", "1"}):
     print(f"CONFIG ERROR:./config/protect.conf can't be {PROTECT}")
