@@ -1,18 +1,14 @@
-// Launcher.cpp
-//-*- coding:UTF-8 -*-
+// main.cpp
+//-*- coding:utf-8 -*-
 
 #include <cstdlib>
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
-/***************************************
-这是AutoDownload Bot的启动程序
-编译环境：gcc
-作者:ZZH
-
-V1.0.0 Beta
-***************************************/
+#ifdef __GNUC__
+// 编译环境：gcc
 
 #define SYSTEMFLAG "MSNT"
 //  在这里输入你的系统类型，"MSNT"代表微软
@@ -21,23 +17,26 @@ V1.0.0 Beta
 //  基于Linux内核的桌面版、发行版、服务器版
 //  操作系统
 
-#if SYSTEMFLAG == "MSNT"                // NT内核系统？
-#define COMMAND "ENV.exe \\bin\\bot.py" // 设置命令
-#pragma comment(                                                               \
-    linker,                                                                    \
-    "/subsystem:\"windows\" /entry:\"mainCRTStartup\"") // 设置入口地址
+#if SYSTEMFLAG == "MSNT"                 // NT内核系统？
+#define COMMAND "ENV.exe \\src\\main.py" // 设置命令
+#pragma comment( \
+        linker,  \
+            "/subsystem:\"windows\" /entry:\"mainCRTStartup\"") // 设置入口地址
 
-#elif SYSTEMFLAG == "*nix"             // 类UNIX系统？
-#define COMMAND "python3 ./bin/bot.py" // 设置命令
+#elif SYSTEMFLAG == "*nix"              // 类UNIX系统？
+#define COMMAND "python3 ./src/main.py" // 设置命令
 
 #else               // 输入错误
 #define COMMAND "0" // 返回异常
 
 #endif
 
-int main() {
+#endif
 
-  if (COMMAND == "0")
+int main()
+{
+
+  if (strcmp(COMMAND, "0") == 0)
     return 0;
 
   else
