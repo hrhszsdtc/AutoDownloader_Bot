@@ -1,4 +1,5 @@
-
+import os
+import sys
 """
 主程序常量库
 """
@@ -67,7 +68,9 @@ HEADERS = (
 LOG_FILE = "../log"
 
 # 脚本保护
-file = open("./config/protect.conf", "r")
+script_path = os.path.dirname(__file__)
+file_path = os.path.join(script_path, "config", "protect.conf")
+file = open(file_path, "r")
 PROTECT = file.readline()
 if not (PROTECT in {"0", "1"}):
     print(f"CONFIG ERROR:./config/protect.conf can't be {PROTECT}")

@@ -25,6 +25,9 @@ rq = datetime.now().strftime("%Y%m%d")[:None]  # 获取当天的日期，在logs
 log_path = os.path.dirname(os.getcwd()) + "/logs/"
 log_name = log_path + rq + ".log"
 logfile = log_name
+log_path = os.path.dirname(os.getcwd()) + "/logs/"
+if not os.path.exists(log_path):
+    os.makedirs(log_path)
 fh = logging.FileHandler(logfile, encoding="utf-8", mode="a+")  # mode的使用见以下Python文件读写
 fh.setLevel(logging.DEBUG)  # 输出到file的log等级的开关
 

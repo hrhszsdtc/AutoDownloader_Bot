@@ -56,7 +56,7 @@ class Language(object):
         print(f">>{self.data}")
 
         if not isinstance(self.data, list):
-            pwarm("data isn't a list")
+            utils.pwarm("data isn't a list")
 
         else:
             try:
@@ -65,7 +65,7 @@ class Language(object):
                     dump(self.data, file)
 
             except Exception as e:
-                pwarm(e)
+                utils.pwarm(e)
 
 
 # 导入语言
@@ -81,7 +81,7 @@ except Exception as e:
         sys.exit(1)
 
 # 导入成功
-pok("语言导入成功！")
+utils.pok("语言导入成功！")
 
 
 # 取得网页源代码
@@ -102,7 +102,7 @@ def get_content(url_path):
         print(data)
 
     except Exception as e:
-        pwarm(e)
+        utils.pwarm(e)
 
 
 # 用于获得HTTP响应头和JSON数据
@@ -117,13 +117,13 @@ def get_request(url):
         print(f"Data:{data.decode('utf-8')}")
 
     except Exception as e:
-        pwarm(e)
+        utils.pwarm(e)
 
 
 # 解析url
 def un_pack(url):
     print("\n")
-    pout(f"正在解析:[{url}]")
+    utils.pout(f"正在解析:[{url}]")
 
     # 解析url
     temp = url[0:10]
@@ -147,7 +147,7 @@ def un_pack(url):
 
     # 查询是否支持爬取
     if domain not in COULD_DOMAIN:
-        pwarm(f"报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!")
+        utils.pwarm(f"报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!")
         return -1
     # 调用爬虫脚本
     os.system(f"{PYTHON_COM} {domain}_bot.py {url}")
@@ -172,7 +172,7 @@ def main(mode, *url):
                 return 0  # 正常退出
 
             # 检查URL是否可用
-            pout(f"Checking url[{url}]")
+            utils.pout(f"Checking url[{url}]")
 
             try:
                 respnse = urllib.request.urlopen(url)
@@ -182,14 +182,14 @@ def main(mode, *url):
                 print(f"URL不可用!\n:{e}")
                 flag = 0
             except Exception as e:
-                perror(e)
+                utils.perror(e)
                 flag = 0
             # 如果可用
             if flag == 1:
-                pok("URL Checking Over")
+                utils.pok("URL Checking Over")
 
                 # 爬取
-                pout("Spider Start-up")
+                utils.pout("Spider Start-up")
                 un_pack(url)
 
             # 周期结束,打印分割线
@@ -245,7 +245,7 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
             print('请向ZZH20081023@163.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!')
 
     elif not (mode in command):
-        pwarm(f"没有叫做{mode}的模式!")
+        utils.pwarm(f"没有叫做{mode}的模式!")
         start_gui()
 
     else:
