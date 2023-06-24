@@ -1,0 +1,18 @@
+name: Comment on Pull Request
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment on Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const { number } = context.payload.pull_request;
+            const comment = "Please read the project [coding specification document](doc/coding_standards.md) carefully";
+            github.issues.createComment({ owner, repo, issue_number: number, body: comment });
