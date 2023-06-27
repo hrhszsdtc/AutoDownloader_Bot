@@ -2,7 +2,7 @@
 一个可以自动解析和下载各种网站视频的强大爬虫工具.
 
 ## 开发状况:***开发中***  
-本项目由我们的核心开发者ZZH负责主导和推进,他在<https://gitcode.net/CN_ZZH/AutoDownloader_Bot>上公开了他的源代码和开发进度.但是,如果您想获取更多的信息和最新的动态,请关注我们在GitHub上发布的[官方通知](https://github.com/hrh233/AutoDownloader_Bot/discussions).
+本项目的负责人和主要推动者是我们的领导核心hrh233,他具有丰富的经验和专业的技能.我们将在GitHub上定期发布[官方通知](https://github.com/hrh233/AutoDownloader_Bot/discussions),以便您及时了解本项目的进展情况和相关信息.
 
 ## 联系作者
 `tech-whimsy(at)outlook.com`
