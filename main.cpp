@@ -1,46 +1,60 @@
-// main.cpp
-//-*- coding:utf-8 -*-
-
 #include <cstdlib>
 #include <iostream>
-#include <cstring>
+#include <unistd.h>
+#include <cstdio>
 
 using namespace std;
 
-#ifdef __GNUC__
-// 编译环境：gcc
+enum SystemFlag {
+    Windows,
+    Linux,
+    MacOS,
+    Other
+};
 
-#define SYSTEMFLAG "MSNT"
-//  在这里输入你的系统类型，"MSNT"代表微软
-//  的以NT为内核的系统 如Windows 7/8/10/11
-//  "*nix"代表类UNIX系统，包括但不限于UNIX、
-//  基于Linux内核的桌面版、发行版、服务器版
-//  操作系统
-
-#if SYSTEMFLAG == "MSNT"                 // NT内核系统？
-#define COMMAND "ENV.exe \\src\\main.py" // 设置命令
-#pragma comment( \
-        linker,  \
-            "/subsystem:\"windows\" /entry:\"mainCRTStartup\"") // 设置入口地址
-
-#elif SYSTEMFLAG == "*nix"              // 类UNIX系统？
-#define COMMAND "python3 ./src/main.py" // 设置命令
-
-#else               // 输入错误
-#define COMMAND "0" // 返回异常
-
+SystemFlag getSystemFlag() {
+#ifdef _WIN32
+    return SystemFlag::Windows;
+#elif __APPLE__
+    return SystemFlag::MacOS;
+#elif __linux__
+    return SystemFlag::Linux;
+#else
+    return SystemFlag::Other;
 #endif
+}
 
-#endif
+int main() {
+    const string pythonCmd = "python3 ./src/main.py";
+    const string envCmd = "ENV.exe \\src\\main.py";
 
-int main()
-{
+    SystemFlag systemFlag = getSystemFlag();
+    string cmd;
+    switch (systemFlag) {
+        case SystemFlag::Windows:
+            cmd = envCmd;
+            break;
+        case SystemFlag::Linux:
+            cmd = pythonCmd;
+            break;
+        case SystemFlag::MacOS:
+            cmd = pythonCmd;
+            break;
+        default:
+            cerr << "Unsupported system." << endl;
+            return EXIT_FAILURE;
+    }
 
-  if (strcmp(COMMAND, "0") == 0)
-    return 0;
+    if (access(cmd.c_str(), F_OK) == -1) {
+        cerr << "Python3 is not installed." << endl;
+        return EXIT_FAILURE;
+    }
 
-  else
-    system(COMMAND);
+    int ret = std::system(cmd.c_str());
+    if (ret == -1) {
+        perror("Command execution failed");
+        return EXIT_FAILURE;
+    }
 
-  return 0;
+    return EXIT_SUCCESS;
 }
