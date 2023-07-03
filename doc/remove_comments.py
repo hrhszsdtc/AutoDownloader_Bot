@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 import re
 
 CHARS = {
@@ -54,25 +55,24 @@ class Remover:
 class GUI(tk.Frame, Remover):
     def __init__(self, master=None):
         super().__init__(master)
-        self.var = tk.StringVar()
+        self.master.title("Comment Remover")
         self.pack()
         self.create_widgets()
 
     def create_widgets(self):
         self.button_file = tk.Button(self, text="浏览", command=self.select_file)
         self.button_file.pack()
-        for key, value in CHARS.items():
-            tk.Radiobutton(
-                self, text=key, variable=self.var, value=value, command=self.update_lang
-            ).pack(anchor="w")
+        self.combobox = ttk.Combobox(self.master, state="readonly")
+        self.combobox["values"] = list(CHARS.keys())
+        self.combobox.current(0)
+        self.combobox.pack()
 
     def update_lang(self):
-        option_key = self.var.get()
-        option_value = CHARS[option_key]
+        option_key = self.combobox.get()
+        option_value = CHARS.get(option_key)
 
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Comment Remover")
     gui = GUI(master=root)
     gui.mainloop()
