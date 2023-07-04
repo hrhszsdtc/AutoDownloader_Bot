@@ -5,7 +5,7 @@ from tkinter import filedialog, ttk
 
 CHARS = {
     "C": [r"/\*.*?\*/", r"//.*?"],
-    "Python": [r"#.*?", r"'''(?:.*?)'''", r'"""(?:.*?)"""'],
+    "Python": [r"#.*?", r"'''[\s\S]*?'''", r'"""[\s\S]*?"""'],
     "Java": [r"/\*.*?\*/", r"//.*?"],
     "HTML": [r"<!--\s*[\S\s]*?\s*-->"],
     "CSS": [r"/\*\s*[\S\s]*?\s*\*/"],
@@ -47,8 +47,8 @@ class Remover:
             new_file_content = self.remove(chosen_file, chosen_chars)
             file_name, file_ext = os.path.splitext(chosen_file)
             new_file_name = file_name + SUFFIX + file_ext
-            with open(new_file_name, "w", encoding="utf-8") as f:
-                f.write(new_file_content)
+            with open(new_file_name, "wb") as f:
+                f.write(new_file_content.encode("utf-8"))
         else:
             print("请选择一个文件")
 
