@@ -1,7 +1,7 @@
 import os
 import re
 import tkinter as tk
-from tkinter import filedialog, ttk
+from tkinter import filedialog, messagebox, ttk
 
 CHARS = {
     "C": [r"/\*.*?\*/", r"//.*?"],
@@ -31,31 +31,38 @@ SUFFIX = "_nocomment"
 
 
 class Remover:
-    def remove(self, file, chars):
-        with open(file, "r", encoding="utf-8") as f:
+    def __init__(self):
+        self.chosen_file = tk.StringVar()
+
+    def remove(self, chars):
+        with open(self.chosen_file.get(), "r", encoding="utf-8") as f:
             content = f.read()
         for pattern in chars:
             content = re.sub(pattern, "", content, flags=re.DOTALL | re.MULTILINE)
         return content
 
     def select_file(self):
-        global chosen_file
-        chosen_file = filedialog.askopenfilename()
+        self.chosen_file.set(filedialog.askopenfilename())
 
     def remove_and_save(self, chosen_chars):
-        if chosen_file:
-            new_file_content = self.remove(chosen_file, chosen_chars)
-            file_name, file_ext = os.path.splitext(chosen_file)
-            new_file_name = file_name + SUFFIX + file_ext
-            with open(new_file_name, "wb") as f:
-                f.write(new_file_content.encode("utf-8"))
+        if self.chosen_file.get():
+            try:
+                new_file_content = self.remove(chosen_chars)
+                file_name, file_ext = os.path.splitext(self.chosen_file.get())
+                new_file_name = file_name + SUFFIX + file_ext
+                with open(new_file_name, "wb") as f:
+                    f.write(new_file_content.encode("utf-8"))
+                messagebox.showinfo("成功", f"注释已移除，新文件保存在{new_file_name}")
+            except Exception as e:
+                messagebox.showerror("失败", f"发生错误：{e}")
         else:
-            print("请选择一个文件")
+            messagebox.showwarning("警告", "请选择一个文件")
 
 
 class GUI(tk.Frame, Remover):
     def __init__(self, master=None):
         super().__init__(master)
+        Remover.__init__(self)
         self.option_value = None
         self.master.title("Comment Remover")
         self.pack()
@@ -64,6 +71,8 @@ class GUI(tk.Frame, Remover):
     def create_widgets(self):
         self.button_file = tk.Button(self, text="浏览", command=self.select_file)
         self.button_file.pack()
+        self.label_file = tk.Label(self, textvariable=self.chosen_file)
+        self.label_file.pack()
         self.combobox = ttk.Combobox(self.master, state="readonly")
         self.combobox["values"] = list(CHARS.keys())
         self.combobox.current(0)
