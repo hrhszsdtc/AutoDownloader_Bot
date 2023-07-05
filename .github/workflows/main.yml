@@ -4,6 +4,13 @@ on:
   pull_request:
     types: [opened]
 
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+  discussions: read
+  packages: none
+
 jobs:
   comment_on_pr:
     runs-on: ubuntu-latest
