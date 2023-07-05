@@ -14,5 +14,5 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const { number } = context.payload.pull_request;
-            const comment = "Please read the project [coding specification document](doc/coding_standards.md) carefully";
-            github.issues.createComment({ owner, repo, issue_number: number, body: comment });
+            const comment = "Please read the project [coding specification document](https://github.com/hrh233/AutoDownloader_Bot/blob/main/doc/coding_standards.md) carefully";
+            github.rest.issues.createComment({ owner, repo, issue_number: number, body: comment });
