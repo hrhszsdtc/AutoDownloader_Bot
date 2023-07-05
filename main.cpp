@@ -5,14 +5,16 @@
 
 using namespace std;
 
-enum SystemFlag {
+enum SystemFlag
+{
     Windows,
     Linux,
     MacOS,
     Other
 };
 
-SystemFlag getSystemFlag() {
+SystemFlag getSystemFlag()
+{
 #ifdef _WIN32
     return SystemFlag::Windows;
 #elif __APPLE__
@@ -24,34 +26,38 @@ SystemFlag getSystemFlag() {
 #endif
 }
 
-int main() {
+int main()
+{
     const string pythonCmd = "python3 ./src/main.py";
     const string envCmd = "ENV.exe \\src\\main.py";
 
     SystemFlag systemFlag = getSystemFlag();
     string cmd;
-    switch (systemFlag) {
-        case SystemFlag::Windows:
-            cmd = envCmd;
-            break;
-        case SystemFlag::Linux:
-            cmd = pythonCmd;
-            break;
-        case SystemFlag::MacOS:
-            cmd = pythonCmd;
-            break;
-        default:
-            cerr << "Unsupported system." << endl;
-            return EXIT_FAILURE;
+    switch (systemFlag)
+    {
+    case SystemFlag::Windows:
+        cmd = envCmd;
+        break;
+    case SystemFlag::Linux:
+        cmd = pythonCmd;
+        break;
+    case SystemFlag::MacOS:
+        cmd = pythonCmd;
+        break;
+    default:
+        cerr << "Unsupported system." << endl;
+        return EXIT_FAILURE;
     }
 
-    if (access(cmd.c_str(), F_OK) == -1) {
+    if (access(cmd.c_str(), F_OK) == -1)
+    {
         cerr << "Python3 is not installed." << endl;
         return EXIT_FAILURE;
     }
 
     int ret = std::system(cmd.c_str());
-    if (ret == -1) {
+    if (ret == -1)
+    {
         perror("Command execution failed");
         return EXIT_FAILURE;
     }
