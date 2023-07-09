@@ -9,3 +9,7 @@
 ## 联系作者
 
 `tech-whimsy(at)outlook.com`
+
+## 版权声明
+
+*Copyright (C) 2022-2023 hrhszsdtc*
