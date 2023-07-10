@@ -1,3 +1,5 @@
+# Copyright (C) 2023 hrhszsdtc
+
 import sys
 
 import sqlite3

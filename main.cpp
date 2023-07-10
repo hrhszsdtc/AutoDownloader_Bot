@@ -1,3 +1,5 @@
+// Copyright (C) 2023 hrhszsdtc
+
 #include <cstdlib>
 #include <iostream>
 #include <unistd.h>

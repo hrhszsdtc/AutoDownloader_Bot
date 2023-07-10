@@ -1,3 +1,5 @@
+# Copyright (C) 2023 hrhszsdtc
+
 import sqlite3 as sql
 import os
 import sys
@@ -9,6 +11,9 @@ from pickle import dump, load
 
 from utils import *
 import constants
+
+# 版权信息
+copyright_notice = "Copyright (C) 2023 hrhszsdtc"
 
 """
 脚本设置
@@ -162,7 +167,7 @@ def main(mode, *url):
         url = ""
 
         # 主界面
-        print(f"{cutline}\n{ZZH}\n{cutline}\n")  # 打印ZZH图标
+        print(f"{cutline}\n{copyright_notice}\n{cutline}\n")  # 打印版权信息
         print("\t:)Tip:输入exit退出,输入url地址开始爬取")
         while True:
             flag = 1
@@ -200,11 +205,11 @@ def main(mode, *url):
 def start_gui():
     # 创建主窗口
     window = tk.Tk()
-    window.title("AutoSpider V1.0")
+    window.title("AD_B by hrhszsdtc")
 
     # 显示消息控件
     text = tk.Text(window, height=10, width=50)  # ,state='disable')
-    text.insert(tk.INSERT, ZZH2)
+    text.insert(tk.INSERT, copyright_notice)
     text.pack()
 
     # 显示标签控件
@@ -228,7 +233,7 @@ def start(mode):
         except Exception as e:
             print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
             print(
-                '请向ZZH20081023@163.com发送标题为"Bu\
+                '请向tech-whimsy@outlook.com发送标题为"Bu\
 g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
 的反馈!'
             )
@@ -238,11 +243,13 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
             if main(0) is None:
                 print(":)程序非正常退出,可能是崩溃了!")
                 print(
-                    '请向ZZH20081023@163.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
+                    '请向tech-whimsy@outlook.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
                 )
         except Exception as e:
             print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
-            print('请向ZZH20081023@163.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!')
+            print(
+                '请向tech-whimsy@outlook.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
+            )
 
     elif not (mode in command):
         utils.pwarm(f"没有叫做{mode}的模式!")
