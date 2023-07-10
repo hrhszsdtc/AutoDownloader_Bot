@@ -41,15 +41,20 @@ _BREAKDOWN2 = ""
 
 # 多语言支持类
 class Language(object):
+    # 初始化类，传入参数data
     def __int__(self, data):
         self.data = data
 
+    # 导入语言
     def import_language(self):
+        # 打开文件，读取文件中的行，并将其赋值给变量lang_file_name
         with open("./config/languages.conf", "r", encoding="utf-8") as config_file:
             lang_file_name = config_file.readline()
 
+        # 打印出lang_file_name
         print(f">>{lang_file_name}")
 
+        # 连接数据库，并将lang_file_name作为参数传入sql.connect
         db = sql.connect(database=lang_file_name)
 
     def compile_lang_file(self, filename):
