@@ -66,7 +66,7 @@ def critical(msg):
 
 def pout(string):
     # 判断系统类型
-    if SYSTEM == 2:
+    if sys.platform.startswith("linux"):
         print(f"[*]\033[0;33m{string}\033[0m")
     else:
         print(f"[*]{string}")
@@ -76,7 +76,7 @@ def pout(string):
 
 def pwarm(string):
     # 判断系统类型
-    if SYSTEM == 2:
+    if sys.platform.startswith("linux"):
         print(f"\033[0;31m[!]{string}\033[0m")
     else:
         print(f"[!]{string}")
@@ -85,7 +85,7 @@ def pwarm(string):
 
 def perror(string):
     # 判断系统类型
-    if SYSTEM == 2:
+    if sys.platform.startswith("linux"):
         print(f"[\033[0;31mERROR\033[0m]{string}")
     else:
         print(f"[ERROR]{string}")
@@ -95,7 +95,7 @@ def perror(string):
 
 def pok(string):
     # 判断系统类型
-    if SYSTEM == 2:
+    if sys.platform.startswith("linux"):
         print(f"[ \033[0;32mOK\033[0m ] {string}")
     else:
         print(f"[ ok ]{string}")

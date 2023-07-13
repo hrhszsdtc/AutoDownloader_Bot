@@ -9,7 +9,7 @@ import urllib
 import urllib.request
 from pickle import dump, load
 
-from utils import *
+import utils
 import constants
 
 # 版权信息
@@ -84,11 +84,7 @@ try:
     LANGUAGE.import_language()
 
 except Exception as e:
-    error(f"语言导入失败！\n{e}")
-
-    if PROTECT == "1":
-        # 抛出异常退出程序
-        sys.exit(1)
+    utils.error(f"语言导入失败！\n{e}")
 
 # 导入成功
 utils.pok("语言导入成功！")
