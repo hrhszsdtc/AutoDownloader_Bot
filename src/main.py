@@ -156,7 +156,7 @@ def un_pack(url):
         utils.pwarm(f"报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!")
         return -1
     # 调用爬虫脚本
-    os.system(f"{PYTHON_COM} {domain}_bot.py {url}")
+    os.system(f"{PYTHON_COM} /script/{domain}.py {url}")
     # 将权限交由爬虫处理与调用
 
 
