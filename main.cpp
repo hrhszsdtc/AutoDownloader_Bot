@@ -42,11 +42,11 @@ int main()
     switch (systemFlag)
     {
     case SystemFlag::Windows:
-        cmd = "py -3 /src/main.py";
+        cmd = "py -3 ./src/main.py";
         break;
     case SystemFlag::Linux:
     case SystemFlag::MacOS:{
-				   string whichCmd = "which python3";
+				   string whichCmd = "command -v python3";
 				   FILE* pWhich  = popen(whichCmd.c_str(),"r");
 				   if (!pWhich) {
 					   cerr << "Command execution failed" << endl;
@@ -70,20 +70,16 @@ int main()
         return EXIT_FAILURE;
     }
 
-    // 检查python是否可执行
-    if (access(cmd.c_str(), X_OK) == -1)
-    {
-        cerr << "Python3 is not installed." << endl;
-        return EXIT_FAILURE;
+    FILE* pCmd = popen(cmd.c_str(), "r");
+    if (!pCmd){
+	    cerr << "Python3 in not installed or command execution failed." << endl;
+	    return EXIT_FAILURE;
     }
-
-    // 执行命令
-    int ret = std::system(cmd.c_str());
-    if (ret == -1)
-    {
-        perror("Command execution failed");
-        return EXIT_FAILURE;
+    char buf[256];
+    while (fgets(buf,sizeof(buf),pCmd)){
+	    cout << buf;
     }
+    pclose(pCmd);
 
     return EXIT_SUCCESS;
 }
