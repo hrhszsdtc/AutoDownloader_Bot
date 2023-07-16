@@ -30,11 +30,10 @@ SystemFlag getSystemFlag()
 
 int main()
 {
-    const string pythonCmd = "python3 ./src/main.py";
     // 定义python命令
-    const string pythonCmd = "python3./src/main.py";
+    const string pythonCmd = "python3 ./src/main.py";
     // 定义环境命令
-    const string envCmd = "ENV.exe \\src\\main.py";
+    const string envCmd = "py -3 \\src\\main.py";
 
     // 获取系统类型
     SystemFlag systemFlag = getSystemFlag();
@@ -57,8 +56,8 @@ int main()
         return EXIT_FAILURE;
     }
 
-    // 检查python是否安装
-    if (access(cmd.c_str(), F_OK) == -1)
+    // 检查python是否可执行
+    if (access(cmd.c_str(), X_OK) == -1)
     {
         cerr << "Python3 is not installed." << endl;
         return EXIT_FAILURE;
