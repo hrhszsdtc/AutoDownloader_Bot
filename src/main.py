@@ -7,6 +7,7 @@ import time
 import tkinter as tk
 import urllib
 import urllib.request
+from urllib.parse import urlparse
 from pickle import dump, load
 
 import utils
@@ -19,9 +20,12 @@ copyright_notice = "Copyright (C) 2023 hrhszsdtc"
 脚本设置
 """
 
-
-# 支持爬取的域名,注:全小写!!!
-COULD_DOMAIN = ["baidu.com", "www.baidu.com", "v.qq.com"]
+# 域名映射字典
+DN = {
+    "bilibili": ("bilibili.com", "www.bilibili.com", "b23.tv"),
+    "iqiyi": ("www.iqiyi.com", "iqiyi.com"),
+}
+DOMAIN_NAME = {x: k for k, v in DN.items() for x in v}
 
 # 初始化语言
 _PARSING = ""
@@ -131,33 +135,18 @@ def un_pack(url):
     print("\n")
     utils.pout(f"正在解析:[{url}]")
 
-    # 解析url
-    temp = url[0:10]
-    i = 0
-    if "https://" in temp:  # 如果是https
-        # 剥离域名
-        i = 8
-    else:
-        i = 7
-    temp = ""  # 清空缓存
-    while True:
-        ch = url[i]
-        if ch == "/":
-            break
-        temp += ch
-        i += 1
-
-    # 打印分析出的域名
-    domain = temp
+    # 解析url,打印分析出的域名
+    domain = urlparse(url)
     print(f"    domain:{domain}")
 
-    # 查询是否支持爬取
-    if domain not in COULD_DOMAIN:
-        utils.pwarm(f"报歉,该域名下[({domain}) from ({url})的资源暂时不支持爬取!")
+    try:
+        domain_name = DOMAIN_NAME[domain]
+        # 调用爬虫脚本
+        os.system(f"{PYTHON_COM} /script/{domain}.py {url}")
+        # 将权限交由爬虫处理与调用
+    except:
+        utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
         return -1
-    # 调用爬虫脚本
-    os.system(f"{PYTHON_COM} /script/{domain}.py {url}")
-    # 将权限交由爬虫处理与调用
 
 
 # 主程序
