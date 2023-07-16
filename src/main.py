@@ -22,9 +22,9 @@ copyright_notice = "Copyright (C) 2023 hrhszsdtc"
 
 # 域名映射字典
 DN = {
-        'bilibili' : ('bilibili.com','www.bilibili.com','b23.tv'),
-        'iqiyi' : ('www.iqiyi.com','iqiyi.com')
-        }
+    "bilibili": ("bilibili.com", "www.bilibili.com", "b23.tv"),
+    "iqiyi": ("www.iqiyi.com", "iqiyi.com"),
+}
 DOMAIN_NAME = {x: k for k, v in DN.items() for x in v}
 
 # 初始化语言
@@ -140,13 +140,14 @@ def un_pack(url):
     print(f"    domain:{domain}")
 
     try:
-        domain_name = DOMAIN_NAME[domain] 
+        domain_name = DOMAIN_NAME[domain]
         # 调用爬虫脚本
         os.system(f"{PYTHON_COM} /script/{domain}.py {url}")
         # 将权限交由爬虫处理与调用
     except:
         utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
         return -1
+
 
 # 主程序
 def main(mode, *url):
