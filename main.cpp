@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstdio>
+#include <cstring>
 
 using namespace std;
 
@@ -30,11 +31,8 @@ SystemFlag getSystemFlag()
 
 int main()
 {
-    const string pythonCmd = "python3 ./src/main.py";
     // 定义python命令
-    const string pythonCmd = "python3./src/main.py";
-    // 定义环境命令
-    const string envCmd = "ENV.exe \\src\\main.py";
+    const string pythonCmd = "python3 ./src/main.py";
 
     // 获取系统类型
     SystemFlag systemFlag = getSystemFlag();
@@ -44,33 +42,44 @@ int main()
     switch (systemFlag)
     {
     case SystemFlag::Windows:
-        cmd = envCmd;
+        cmd = "py -3 ./src/main.py";
         break;
     case SystemFlag::Linux:
-        cmd = pythonCmd;
-        break;
-    case SystemFlag::MacOS:
-        cmd = pythonCmd;
-        break;
+    case SystemFlag::MacOS:{
+				   string whichCmd = "command -v python3";
+				   FILE* pWhich  = popen(whichCmd.c_str(),"r");
+				   if (!pWhich) {
+					   cerr << "Command execution failed" << endl;
+					   return EXIT_FAILURE;
+				   }
+				   char buf[256];
+				   fgets(buf, sizeof(buf),pWhich);
+				   pclose(pWhich);
+
+				   if (strlen(buf) == 0){
+					   cerr << "Python3 is not installed" << endl;
+					   return EXIT_FAILURE;
+				   }
+				   buf[strlen(buf)-1] = '\0';
+
+				   cmd = string(buf) + " ./src/main.py";
+				   break;
+			   }
     default:
         cerr << "Unsupported system." << endl;
         return EXIT_FAILURE;
     }
 
-    // 检查python是否安装
-    if (access(cmd.c_str(), F_OK) == -1)
-    {
-        cerr << "Python3 is not installed." << endl;
-        return EXIT_FAILURE;
+    FILE* pCmd = popen(cmd.c_str(), "r");
+    if (!pCmd){
+	    cerr << "Python3 in not installed or command execution failed." << endl;
+	    return EXIT_FAILURE;
     }
-
-    // 执行命令
-    int ret = std::system(cmd.c_str());
-    if (ret == -1)
-    {
-        perror("Command execution failed");
-        return EXIT_FAILURE;
+    char buf[256];
+    while (fgets(buf,sizeof(buf),pCmd)){
+	    cout << buf;
     }
+    pclose(pCmd);
 
     return EXIT_SUCCESS;
 }
