@@ -62,7 +62,7 @@ int main()
 				   }
 				   buf[strlen(buf)-1] = '\0';
 
-				   cmd = string(buf) + "./src/main.py";
+				   cmd = string(buf) + " ./src/main.py";
 				   break;
 			   }
     default:
