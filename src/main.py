@@ -1,6 +1,5 @@
 # Copyright (C) 2023 hrhszsdtc
 
-import sqlite3 as sql
 import os
 import sys
 import time
@@ -8,7 +7,6 @@ import tkinter as tk
 import urllib
 import urllib.request
 from urllib.parse import urlparse
-from pickle import dump, load
 
 import utils
 import constants
@@ -26,73 +24,6 @@ DN = {
     "iqiyi": ("www.iqiyi.com", "iqiyi.com"),
 }
 DOMAIN_NAME = {x: k for k, v in DN.items() for x in v}
-
-# 初始化语言
-_PARSING = ""
-_DOMAIN = ""
-_DO_NOT_ABLE_TO_GET1 = ""
-_FROM = ""
-_TIP = ""
-_TIP_TEXT = ""
-_CHECK_URL = ""
-_URL_UNAVAILABLE = ""
-_CHECK_COMPLETED = ""
-_START_SPIDER = ""
-_INPUT_URL_ADDR = ""
-_BREAKDOWN1 = ""
-_BREAKDOWN2 = ""
-
-
-# 多语言支持类
-class Language(object):
-    # 初始化类，传入参数data
-    def __int__(self, data):
-        self.data = data
-
-    # 导入语言
-    def import_language(self):
-        # 打开文件，读取文件中的行，并将其赋值给变量lang_file_name
-        with open("./config/languages.conf", "r", encoding="utf-8") as config_file:
-            lang_file_name = config_file.readline()
-
-        # 打印出lang_file_name
-        print(f">>{lang_file_name}")
-
-        # 连接数据库，并将lang_file_name作为参数传入sql.connect
-        db = sql.connect(database=lang_file_name)
-
-    def compile_lang_file(self, filename):
-        """
-        语言文件生成成员函数
-        可以使用次函数生成语言文件，先再目录下创建文件***.lang，然后将完整文件名传入参数
-        注意，data必须是list类型，且不可嵌套
-        """
-        print(f">>{self.data}")
-
-        if not isinstance(self.data, list):
-            utils.pwarm("data isn't a list")
-
-        else:
-            try:
-                with open(filename, "w", encoding="utf-8") as file:
-                    # 序列化
-                    dump(self.data, file)
-
-            except Exception as e:
-                utils.pwarm(e)
-
-
-# 导入语言
-try:
-    LANGUAGE = Language()
-    LANGUAGE.import_language()
-
-except Exception as e:
-    utils.error(f"语言导入失败！\n{e}")
-
-# 导入成功
-utils.pok("语言导入成功！")
-
 
 # 取得网页源代码
 def get_content(url_path):
@@ -214,7 +145,7 @@ def start_gui():
 
 
 def start(mode):
-    command = ["nogui"]
+    command = ["nogui","gui"]
 
     if mode == "gui":
         try:
@@ -250,4 +181,5 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
 
 
 if __name__ == "__main__":
-    start("nogui")
+    model = input("请输入模式(nogui/gui):")
+    start(model)
