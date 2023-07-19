@@ -72,7 +72,7 @@ def un_pack(url):
     # 解析url,打印分析出的域名
     domain = urlparse(url).netloc
     print(f"    domain:{domain}")
-    if domain_name in DOMAIN_NAME:
+    if domain in DOMAIN_NAME:
         try:
             domain_name = DOMAIN_NAME[domain]
             # 调用爬虫脚本
