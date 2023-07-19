@@ -2,14 +2,9 @@
 
 import sys
 
-import sqlite3
 import os
 import sys
 import time
-import tkinter as tk
-import urllib
-import urllib.request
-from pickle import dump, load
 import logging  # 引入logging模块
 import os.path
 from datetime import datetime
