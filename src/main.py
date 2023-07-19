@@ -65,7 +65,7 @@ def get_request(url):
 
 # 解析url
 def un_pack(url):
-    print("\n")
+    sys.stdout.write("\n")
     utils.pout(f"正在解析:[{url}]")
 
     # 解析url,打印分析出的域名
@@ -95,7 +95,7 @@ def main(mode, *url):
         url = ""
 
         # 主界面
-        print(f"{cutline}\n{copyright_notice}\n{cutline}\n")  # 打印版权信息
+        sys.stdout.write(f"{cutline}\n{copyright_notice}\n{cutline}\n")  # 打印版权信息
         print("\t:)Tip:输入exit退出,输入url地址开始爬取")
         while True:
             flag = 1
@@ -112,7 +112,7 @@ def main(mode, *url):
 
             # 如果异常
             except urllib.request.URLError as e:
-                print(f"URL不可用!\n:{e}")
+                sys.stdout.write(f"URL不可用!\n:{e}")
                 flag = 0
             except Exception as e:
                 utils.perror(e)
@@ -178,7 +178,7 @@ def start(mode):
             start_gui()
 
         except Exception as e:
-            print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
+            sys.stdout.write(f"{e}\n:)程序非正常退出,可能是崩溃了!")
             print(
                 '请向tech-whimsy@outlook.com发送标题为"Bu\
 g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
@@ -193,7 +193,7 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
                     '请向tech-whimsy@outlook.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
                 )
         except Exception as e:
-            print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
+            sys.stdout.write(f"{e}\n:)程序非正常退出,可能是崩溃了!")
             print(
                 '请向tech-whimsy@outlook.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
             )
