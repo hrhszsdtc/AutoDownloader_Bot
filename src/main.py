@@ -2,6 +2,7 @@
 
 import os
 import sys
+import signal
 import time
 import tkinter as tk
 import urllib
@@ -74,11 +75,15 @@ def un_pack(url):
         domain_name = DOMAIN_NAME[domain]
         # 调用爬虫脚本
         os.system(f"{PYTHON_COM} /script/{domain}.py {url}")
-        # 将权限交由爬虫处理与调用
     except:
         utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
         return -1
 
+def un_pack_gui(input_url):
+    try:
+        un_pack(input_url)
+    except KeyboardInterrupt:
+        return 0
 
 # 主程序
 def main(mode, *url):
@@ -121,6 +126,13 @@ def main(mode, *url):
             # 周期结束,打印分割线
             print(cutline2)
 
+def print_to_text(text):
+    def write(s):
+        text.insert(tk.END, s)
+        text.see(tk.END)
+        text.update()
+    return write
+
 # GUI界面
 class GUI(tk.Frame):
     def __init__(self, master=None):
@@ -131,15 +143,19 @@ class GUI(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        self.text = tk.Text(self, height=10, width=50)
+        self.text = tk.Text(self)
         self.text.insert(tk.INSERT, copyright_notice)
         self.text.pack()
+        sys.stdout = print_to_text(self.text)
+        sys.stderr = print_to_text(self.text)
 
-        self.label = tk.Label(self, width=50, text="请输入要爬取的URL:")
+        self.label = tk.Label(self, text="Type in the URL,press Enter to start and Ctrl+C to end.")
         self.label.pack()
 
-        self.url_entry = tk.Entry(self, width=50)
+        self.url_entry = tk.Entry(self)
         self.url_entry.pack()
+        user_input = self.url_entry.get()
+        self.url_entry.bind("<Return>", lambda event:un_pack_gui(user_input))
 
 def start(mode):
     command = ["nogui","gui"]
