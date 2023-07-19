@@ -1,5 +1,6 @@
 # Copyright (C) 2023 hrhszsdtc
 
+import contextlib
 import os
 import sys
 import signal
@@ -128,13 +129,6 @@ def main(mode, *url):
             # 周期结束,打印分割线
             print(cutline2)
 
-def print_to_text(text):
-    def write(s):
-        text.insert(tk.END, s)
-        text.see(tk.END)
-        text.update()
-    return write
-
 # GUI界面
 class GUI(tk.Frame):
     def __init__(self, master=None):
@@ -155,9 +149,6 @@ class GUI(tk.Frame):
         self.scroll.grid(row=0, column=1, sticky="ns")
         self.sub_frame.grid(row=0, column=0, columnspan=2, sticky="nsew")
 
-        sys.stdout = print_to_text(self.text)
-        sys.stderr = print_to_text(self.text)
-
         self.label = tk.Label(self, text="Type in the URL,press <Enter> to start and <Ctrl+C> to end.")
         self.label.grid(row=1)
 
@@ -165,10 +156,18 @@ class GUI(tk.Frame):
         self.url_entry.grid(row=2)
         
         self.url_entry.bind("<Return>", lambda event:un_pack(self.url_entry.get()))
+        def print_to_text(self, text):
+            def write(s):
+                text.insert(tk.END, s)
+                text.see(tk.END)
+                text.update()
+            return write
+
 def start_gui():
     root = tk.Tk()
     gui = GUI(master=root)
-    gui.mainloop()
+    with contextlib.redirect_stdout(gui.print_to_text(gui.text)),contextlib.redirect_stderr(gui.print_to_text(gui.text)):
+        gui.master.mainloop()
 
 def start(mode):
     command = ["nogui","gui"]
