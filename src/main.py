@@ -156,17 +156,16 @@ class GUI(tk.Frame):
         self.url_entry.grid(row=2)
         
         self.url_entry.bind("<Return>", lambda event:un_pack(self.url_entry.get()))
-        def print_to_text(self, text):
-            def write(s):
-                text.insert(tk.END, s)
-                text.see(tk.END)
-                text.update()
-            return write
-
+def print_to_text(text):
+    def write(s):
+        text.insert(tk.END, s)
+        text.see(tk.END)
+        text.update()
+    return write
 def start_gui():
     root = tk.Tk()
     gui = GUI(master=root)
-    with contextlib.redirect_stdout(gui.print_to_text(gui.text)),contextlib.redirect_stderr(gui.print_to_text(gui.text)):
+    with contextlib.redirect_stdout(print_to_text(gui.text)),contextlib.redirect_stderr(print_to_text(gui.text)):
         gui.master.mainloop()
 
 def start(mode):
