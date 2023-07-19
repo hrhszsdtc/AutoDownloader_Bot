@@ -121,35 +121,34 @@ def main(mode, *url):
             # 周期结束,打印分割线
             print(cutline2)
 
-
 # GUI界面
-def start_gui():
-    # 创建主窗口
-    window = tk.Tk()
-    window.title("AD_B by hrhszsdtc")
+class GUI(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.master.title("AD_B by hrhszsdtc")
+        self.pack()
+        self.create_widgets()
 
-    # 显示消息控件
-    text = tk.Text(window, height=10, width=50)  # ,state='disable')
-    text.insert(tk.INSERT, copyright_notice)
-    text.pack()
+    def create_widgets(self):
+        self.text = tk.Text(self, height=10, width=50)
+        self.text.insert(tk.INSERT, copyright_notice)
+        self.text.pack()
 
-    # 显示标签控件
-    label = tk.Label(window, width=50, text="要爬取的URL地址:")
-    label.pack()
+        self.label = tk.Label(self, width=50, text="请输入要爬取的URL:")
+        self.label.pack()
 
-    # 显示URL输入框
-    url_entry = tk.Entry(window, width=50)
-    url_entry.pack()
-
-    window.mainloop()
-
+        self.url_entry = tk.Entry(self, width=50)
+        self.url_entry.pack()
 
 def start(mode):
     command = ["nogui","gui"]
 
     if mode == "gui":
         try:
-            start_gui()
+            root = tk.Tk()
+            gui = GUI(master=root)
+            gui.mainloop()
 
         except Exception as e:
             print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
