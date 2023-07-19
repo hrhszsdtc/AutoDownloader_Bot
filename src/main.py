@@ -69,16 +69,19 @@ def un_pack(url):
     utils.pout(f"正在解析:[{url}]")
 
     # 解析url,打印分析出的域名
-    domain = urlparse(url)
+    domain = urlparse(url).netloc
     print(f"    domain:{domain}")
 
     try:
         domain_name = DOMAIN_NAME[domain]
         # 调用爬虫脚本
-        proc = subprocess.Popen([PYTHON_COM, f"/script/{domain}.py", url])
+        proc = subprocess.Popen([PYTHON_COM, f"/script/{domain}.py", url], shell=True)
         proc.wait()
     except KeyboardInterrupt:
         proc.terminate()
+        return
+    except Exception as e:
+        utils.perror(e)
         return
     except:
         utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
@@ -161,8 +164,7 @@ class GUI(tk.Frame):
         self.url_entry = tk.Entry(self)
         self.url_entry.grid(row=2)
         
-        input_url = self.url_entry.get()
-        self.url_entry.bind("<Return>", lambda event:un_pack(input_url))
+        self.url_entry.bind("<Return>", lambda event:un_pack(self.url_entry.get()))
 def start_gui():
     root = tk.Tk()
     gui = GUI(master=root)
