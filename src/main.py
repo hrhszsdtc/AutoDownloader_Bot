@@ -164,15 +164,17 @@ class GUI(tk.Frame):
 
         user_input = self.url_entry.get()
         self.url_entry.bind("<Return>", lambda event:un_pack_gui(user_input))
+def start_gui():
+    root = tk.Tk()
+    gui = GUI(master=root)
+    gui.mainloop()
 
 def start(mode):
     command = ["nogui","gui"]
 
     if mode == "gui":
         try:
-            root = tk.Tk()
-            gui = GUI(master=root)
-            gui.mainloop()
+            start_gui()
 
         except Exception as e:
             print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
