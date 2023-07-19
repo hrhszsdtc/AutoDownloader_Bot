@@ -143,17 +143,25 @@ class GUI(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        self.text = tk.Text(self)
+        self.sub_frame = tk.Frame(self)
+        self.text = tk.Text(self.sub_frame)
         self.text.insert(tk.INSERT, copyright_notice)
-        self.text.pack()
+        self.scroll = tk.Scrollbar(self.sub_frame)
+        self.text.config(yscrollcommand=self.scroll.set)
+        self.scroll.config(command=self.text.yview)
+        self.text.grid(row=0, column=0, sticky="nsew")
+        self.scroll.grid(row=0, column=1, sticky="ns")
+        self.sub_frame.grid(row=0, column=0, columnspan=2, sticky="nsew")
+
         sys.stdout = print_to_text(self.text)
         sys.stderr = print_to_text(self.text)
 
         self.label = tk.Label(self, text="Type in the URL,press Enter to start and Ctrl+C to end.")
-        self.label.pack()
+        self.label.grid(row=1)
 
         self.url_entry = tk.Entry(self)
-        self.url_entry.pack()
+        self.url_entry.grid(row=2)
+
         user_input = self.url_entry.get()
         self.url_entry.bind("<Return>", lambda event:un_pack_gui(user_input))
 
