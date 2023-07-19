@@ -3,6 +3,7 @@
 import os
 import sys
 import signal
+import subprocess
 import time
 import tkinter as tk
 import urllib
@@ -74,15 +75,13 @@ def un_pack(url):
     try:
         domain_name = DOMAIN_NAME[domain]
         # 调用爬虫脚本
-        os.system(f"{PYTHON_COM} /script/{domain}.py {url}")
+        proc = subprocess.Popen([PYTHON_COM, f"/script/{domain}.py", url])
+        proc.wait()
+    except KeyboardInterrupt:
+        proc.terminate()
+        return
     except:
         utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
-        return
-
-def un_pack_gui(input_url):
-    try:
-        un_pack(input_url)
-    except KeyboardInterrupt:
         return
 
 # 主程序
@@ -156,14 +155,14 @@ class GUI(tk.Frame):
         sys.stdout = print_to_text(self.text)
         sys.stderr = print_to_text(self.text)
 
-        self.label = tk.Label(self, text="Type in the URL,press Enter to start and Ctrl+C to end.")
+        self.label = tk.Label(self, text="Type in the URL,press <Enter> to start and <Ctrl+C> to end.")
         self.label.grid(row=1)
 
         self.url_entry = tk.Entry(self)
         self.url_entry.grid(row=2)
-
-        user_input = self.url_entry.get()
-        self.url_entry.bind("<Return>", lambda event:un_pack_gui(user_input))
+        
+        input_url = self.url_entry.get()
+        self.url_entry.bind("<Return>", lambda event:un_pack(input_url))
 def start_gui():
     root = tk.Tk()
     gui = GUI(master=root)
