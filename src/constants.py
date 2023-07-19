@@ -8,7 +8,7 @@ import utils
 """
 主程序常量库
 """
-
+os.chdir("src")
 try:
     PYTHON_COM = sys.executable
 except AttributeError as e:
