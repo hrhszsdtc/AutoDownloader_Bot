@@ -77,13 +77,13 @@ def un_pack(url):
         os.system(f"{PYTHON_COM} /script/{domain}.py {url}")
     except:
         utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
-        return -1
+        return
 
 def un_pack_gui(input_url):
     try:
         un_pack(input_url)
     except KeyboardInterrupt:
-        return 0
+        return
 
 # 主程序
 def main(mode, *url):
