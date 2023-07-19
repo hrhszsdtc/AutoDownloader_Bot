@@ -160,9 +160,9 @@ class PrintToText:
     def __init__(self, text):
         self.text=text
     def write(self, s):
-        text.insert(tk.END, s)
-        text.see(tk.END)
-        text.update()
+        self.text.insert(tk.END, s)
+        self.text.see(tk.END)
+        self.text.update()
 
 def start_gui():
     root = tk.Tk()
