@@ -2,17 +2,17 @@
 
 import contextlib
 import os
-import sys
 import signal
 import subprocess
+import sys
 import time
 import tkinter as tk
 import urllib
 import urllib.request
 from urllib.parse import urlparse
 
-import utils
 import constants
+import utils
 
 # 版权信息
 copyright_notice = "Copyright (C) 2023 hrhszsdtc"
@@ -27,6 +27,7 @@ DN = {
     "iqiyi": ("www.iqiyi.com", "iqiyi.com"),
 }
 DOMAIN_NAME = {x: k for k, v in DN.items() for x in v}
+
 
 # 取得网页源代码
 def get_content(url_path):
@@ -76,7 +77,9 @@ def un_pack(url):
         try:
             domain_name = DOMAIN_NAME[domain]
             # 调用爬虫脚本
-            proc = subprocess.Popen([PYTHON_COM, f"/script/{domain}.py", url], shell=True)
+            proc = subprocess.Popen(
+                [PYTHON_COM, f"/script/{domain}.py", url], shell=True
+            )
             proc.wait()
         except KeyboardInterrupt:
             proc.terminate()
@@ -87,6 +90,7 @@ def un_pack(url):
     else:
         utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
         return
+
 
 # 主程序
 def main(mode, *url):
@@ -129,6 +133,7 @@ def main(mode, *url):
             # 周期结束,打印分割线
             print(cutline2)
 
+
 # GUI界面
 class GUI(tk.Frame):
     def __init__(self, master=None):
@@ -149,30 +154,37 @@ class GUI(tk.Frame):
         self.scroll.grid(row=0, column=1, sticky="ns")
         self.sub_frame.grid(row=0, column=0, columnspan=2, sticky="nsew")
 
-        self.label = tk.Label(self, text="Type in the URL,press <Enter> to start and <Ctrl+C> to end.")
+        self.label = tk.Label(
+            self, text="Type in the URL,press <Enter> to start and <Ctrl+C> to end."
+        )
         self.label.grid(row=1)
 
         self.url_entry = tk.Entry(self)
         self.url_entry.grid(row=2)
-        
-        self.url_entry.bind("<Return>", lambda event:un_pack(self.url_entry.get()))
+
+        self.url_entry.bind("<Return>", lambda event: un_pack(self.url_entry.get()))
+
+
 class PrintToText:
     def __init__(self, text):
-        self.text=text
+        self.text = text
+
     def write(self, s):
         self.text.insert(tk.END, s)
         self.text.see(tk.END)
         self.text.update()
 
+
 def start_gui():
     root = tk.Tk()
     gui = GUI(master=root)
     ptt = PrintToText(gui.text)
-    with contextlib.redirect_stdout(ptt),contextlib.redirect_stderr(ptt):
+    with contextlib.redirect_stdout(ptt), contextlib.redirect_stderr(ptt):
         gui.master.mainloop()
 
+
 def start(mode):
-    command = ["nogui","gui"]
+    command = ["nogui", "gui"]
 
     if mode == "gui":
         try:

@@ -45,39 +45,44 @@ int main()
         cmd = "py -3 ./src/main.py";
         break;
     case SystemFlag::Linux:
-    case SystemFlag::MacOS:{
-				   string whichCmd = "command -v python3";
-				   FILE* pWhich  = popen(whichCmd.c_str(),"r");
-				   if (!pWhich) {
-					   cerr << "Command execution failed" << endl;
-					   return EXIT_FAILURE;
-				   }
-				   char buf[256];
-				   fgets(buf, sizeof(buf),pWhich);
-				   pclose(pWhich);
+    case SystemFlag::MacOS:
+    {
+        string whichCmd = "command -v python3";
+        FILE *pWhich = popen(whichCmd.c_str(), "r");
+        if (!pWhich)
+        {
+            cerr << "Command execution failed" << endl;
+            return EXIT_FAILURE;
+        }
+        char buf[256];
+        fgets(buf, sizeof(buf), pWhich);
+        pclose(pWhich);
 
-				   if (strlen(buf) == 0){
-					   cerr << "Python3 is not installed" << endl;
-					   return EXIT_FAILURE;
-				   }
-				   buf[strlen(buf)-1] = '\0';
+        if (strlen(buf) == 0)
+        {
+            cerr << "Python3 is not installed" << endl;
+            return EXIT_FAILURE;
+        }
+        buf[strlen(buf) - 1] = '\0';
 
-				   cmd = string(buf) + " ./src/main.py";
-				   break;
-			   }
+        cmd = string(buf) + " ./src/main.py";
+        break;
+    }
     default:
         cerr << "Unsupported system." << endl;
         return EXIT_FAILURE;
     }
 
-    FILE* pCmd = popen(cmd.c_str(), "r");
-    if (!pCmd){
-	    cerr << "Python3 in not installed or command execution failed." << endl;
-	    return EXIT_FAILURE;
+    FILE *pCmd = popen(cmd.c_str(), "r");
+    if (!pCmd)
+    {
+        cerr << "Python3 in not installed or command execution failed." << endl;
+        return EXIT_FAILURE;
     }
     char buf[256];
-    while (fgets(buf,sizeof(buf),pCmd)){
-	    cout << buf;
+    while (fgets(buf, sizeof(buf), pCmd))
+    {
+        cout << buf;
     }
     pclose(pCmd);
 
