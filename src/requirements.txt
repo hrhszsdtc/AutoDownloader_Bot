@@ -1,1 +1,1 @@
-jsbeautifier
+jsbeautifier==1.14.8

@@ -1,17 +1,18 @@
 # Copyright (C) 2023 hrhszsdtc
 
-import sqlite3 as sql
+import contextlib
 import os
+import signal
+import subprocess
 import sys
 import time
 import tkinter as tk
 import urllib
 import urllib.request
 from urllib.parse import urlparse
-from pickle import dump, load
 
-import utils
 import constants
+import utils
 
 # 版权信息
 copyright_notice = "Copyright (C) 2023 hrhszsdtc"
@@ -26,72 +27,6 @@ DN = {
     "iqiyi": ("www.iqiyi.com", "iqiyi.com"),
 }
 DOMAIN_NAME = {x: k for k, v in DN.items() for x in v}
-
-# 初始化语言
-_PARSING = ""
-_DOMAIN = ""
-_DO_NOT_ABLE_TO_GET1 = ""
-_FROM = ""
-_TIP = ""
-_TIP_TEXT = ""
-_CHECK_URL = ""
-_URL_UNAVAILABLE = ""
-_CHECK_COMPLETED = ""
-_START_SPIDER = ""
-_INPUT_URL_ADDR = ""
-_BREAKDOWN1 = ""
-_BREAKDOWN2 = ""
-
-
-# 多语言支持类
-class Language(object):
-    # 初始化类，传入参数data
-    def __int__(self, data):
-        self.data = data
-
-    # 导入语言
-    def import_language(self):
-        # 打开文件，读取文件中的行，并将其赋值给变量lang_file_name
-        with open("./config/languages.conf", "r", encoding="utf-8") as config_file:
-            lang_file_name = config_file.readline()
-
-        # 打印出lang_file_name
-        print(f">>{lang_file_name}")
-
-        # 连接数据库，并将lang_file_name作为参数传入sql.connect
-        db = sql.connect(database=lang_file_name)
-
-    def compile_lang_file(self, filename):
-        """
-        语言文件生成成员函数
-        可以使用次函数生成语言文件，先再目录下创建文件***.lang，然后将完整文件名传入参数
-        注意，data必须是list类型，且不可嵌套
-        """
-        print(f">>{self.data}")
-
-        if not isinstance(self.data, list):
-            utils.pwarm("data isn't a list")
-
-        else:
-            try:
-                with open(filename, "w", encoding="utf-8") as file:
-                    # 序列化
-                    dump(self.data, file)
-
-            except Exception as e:
-                utils.pwarm(e)
-
-
-# 导入语言
-try:
-    LANGUAGE = Language()
-    LANGUAGE.import_language()
-
-except Exception as e:
-    utils.error(f"语言导入失败！\n{e}")
-
-# 导入成功
-utils.pok("语言导入成功！")
 
 
 # 取得网页源代码
@@ -132,21 +67,29 @@ def get_request(url):
 
 # 解析url
 def un_pack(url):
-    print("\n")
+    sys.stdout.write("\n")
     utils.pout(f"正在解析:[{url}]")
 
     # 解析url,打印分析出的域名
-    domain = urlparse(url)
+    domain = urlparse(url).netloc
     print(f"    domain:{domain}")
-
-    try:
-        domain_name = DOMAIN_NAME[domain]
-        # 调用爬虫脚本
-        os.system(f"{PYTHON_COM} /script/{domain}.py {url}")
-        # 将权限交由爬虫处理与调用
-    except:
+    if domain in DOMAIN_NAME:
+        try:
+            domain_name = DOMAIN_NAME[domain]
+            # 调用爬虫脚本
+            proc = subprocess.Popen(
+                [PYTHON_COM, f"/script/{domain}.py", url], shell=True
+            )
+            proc.wait()
+        except KeyboardInterrupt:
+            proc.terminate()
+            return
+        except Exception as e:
+            utils.perror(e)
+            return
+    else:
         utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
-        return -1
+        return
 
 
 # 主程序
@@ -157,7 +100,7 @@ def main(mode, *url):
         url = ""
 
         # 主界面
-        print(f"{cutline}\n{copyright_notice}\n{cutline}\n")  # 打印版权信息
+        sys.stdout.write(f"{cutline}\n{copyright_notice}\n{cutline}\n")  # 打印版权信息
         print("\t:)Tip:输入exit退出,输入url地址开始爬取")
         while True:
             flag = 1
@@ -174,7 +117,7 @@ def main(mode, *url):
 
             # 如果异常
             except urllib.request.URLError as e:
-                print(f"URL不可用!\n:{e}")
+                sys.stdout.write(f"URL不可用!\n:{e}")
                 flag = 0
             except Exception as e:
                 utils.perror(e)
@@ -192,36 +135,63 @@ def main(mode, *url):
 
 
 # GUI界面
+class GUI(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.master.title("AD_B by hrhszsdtc")
+        self.pack()
+        self.create_widgets()
+
+    def create_widgets(self):
+        self.sub_frame = tk.Frame(self)
+        self.text = tk.Text(self.sub_frame)
+        self.text.insert(tk.INSERT, copyright_notice)
+        self.scroll = tk.Scrollbar(self.sub_frame)
+        self.text.config(yscrollcommand=self.scroll.set)
+        self.scroll.config(command=self.text.yview)
+        self.text.grid(row=0, column=0, sticky="nsew")
+        self.scroll.grid(row=0, column=1, sticky="ns")
+        self.sub_frame.grid(row=0, column=0, columnspan=2, sticky="nsew")
+
+        self.label = tk.Label(
+            self, text="Type in the URL,press <Enter> to start and <Ctrl+C> to end."
+        )
+        self.label.grid(row=1)
+
+        self.url_entry = tk.Entry(self)
+        self.url_entry.grid(row=2)
+
+        self.url_entry.bind("<Return>", lambda event: un_pack(self.url_entry.get()))
+
+
+class PrintToText:
+    def __init__(self, text):
+        self.text = text
+
+    def write(self, s):
+        self.text.insert(tk.END, s)
+        self.text.see(tk.END)
+        self.text.update()
+
+
 def start_gui():
-    # 创建主窗口
-    window = tk.Tk()
-    window.title("AD_B by hrhszsdtc")
-
-    # 显示消息控件
-    text = tk.Text(window, height=10, width=50)  # ,state='disable')
-    text.insert(tk.INSERT, copyright_notice)
-    text.pack()
-
-    # 显示标签控件
-    label = tk.Label(window, width=50, text="要爬取的URL地址:")
-    label.pack()
-
-    # 显示URL输入框
-    url_entry = tk.Entry(window, width=50)
-    url_entry.pack()
-
-    window.mainloop()
+    root = tk.Tk()
+    gui = GUI(master=root)
+    ptt = PrintToText(gui.text)
+    with contextlib.redirect_stdout(ptt), contextlib.redirect_stderr(ptt):
+        gui.master.mainloop()
 
 
 def start(mode):
-    command = ["nogui"]
+    command = ["nogui", "gui"]
 
     if mode == "gui":
         try:
             start_gui()
 
         except Exception as e:
-            print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
+            sys.stdout.write(f"{e}\n:)程序非正常退出,可能是崩溃了!")
             print(
                 '请向tech-whimsy@outlook.com发送标题为"Bu\
 g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
@@ -236,7 +206,7 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
                     '请向tech-whimsy@outlook.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
                 )
         except Exception as e:
-            print(f"{e}\n:)程序非正常退出,可能是崩溃了!")
+            sys.stdout.write(f"{e}\n:)程序非正常退出,可能是崩溃了!")
             print(
                 '请向tech-whimsy@outlook.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
             )
@@ -250,4 +220,5 @@ g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您
 
 
 if __name__ == "__main__":
-    start("nogui")
+    model = input("请输入模式(nogui/gui):")
+    start(model)

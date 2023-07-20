@@ -1,21 +1,10 @@
 # Copyright (C) 2023 hrhszsdtc
 
-import sys
-
-import sqlite3
+import logging  # 引入logging模块
 import os
+import os.path
 import sys
 import time
-import tkinter as tk
-import urllib
-import urllib.request
-from pickle import dump, load
-import logging  # 引入logging模块
-import os.path
-from datetime import datetime
-
-import logging  # 引入logging模块
-import os.path
 from datetime import datetime
 
 # 创建一个logger
