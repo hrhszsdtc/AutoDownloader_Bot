@@ -14,13 +14,6 @@ from urllib.parse import urlparse
 import constants
 import utils
 
-# 版权信息
-copyright_notice = "Copyright (C) 2023 hrhszsdtc"
-
-"""
-脚本设置
-"""
-
 # 域名映射字典
 DN = {
     "bilibili": ("bilibili.com", "www.bilibili.com", "b23.tv"),
@@ -182,7 +175,6 @@ def start_gui():
     with contextlib.redirect_stdout(ptt), contextlib.redirect_stderr(ptt):
         gui.master.mainloop()
 
-
 def start(mode):
     command = ["nogui", "gui"]
 
@@ -192,24 +184,16 @@ def start(mode):
 
         except Exception as e:
             sys.stdout.write(f"{e}\n:)程序非正常退出,可能是崩溃了!")
-            print(
-                '请向tech-whimsy@outlook.com发送标题为"Bu\
-g Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您\
-的反馈!'
-            )
+            utils.feedback()
 
     elif mode == "nogui":
         try:
             if main(0) is None:
                 print(":)程序非正常退出,可能是崩溃了!")
-                print(
-                    '请向tech-whimsy@outlook.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
-                )
+                utils.feedback()
         except Exception as e:
             sys.stdout.write(f"{e}\n:)程序非正常退出,可能是崩溃了!")
-            print(
-                '请向tech-whimsy@outlook.com发送标题为"Bug Report"的邮件,并复制报错信息以及崩溃前的具体操作,感谢您的反馈!'
-            )
+            utils.feedback()
 
     elif not (mode in command):
         utils.pwarm(f"没有叫做{mode}的模式!")

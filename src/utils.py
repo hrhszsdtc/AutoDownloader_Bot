@@ -7,6 +7,8 @@ import sys
 import time
 from datetime import datetime
 
+import constants
+
 # 创建一个logger
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)  # Log等级总开关
@@ -89,3 +91,7 @@ def pok(string):
     else:
         print(f"[ ok ]{string}")
     info(string)
+
+def feedback():
+    sys.stdout.write(feedback_notice)
+
