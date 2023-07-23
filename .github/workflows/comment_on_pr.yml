@@ -1,0 +1,25 @@
+name: Comment on Pull Request
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+  discussions: read
+  packages: none
+
+jobs:
+  comment_on_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment on Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const { number } = context.payload.pull_request;
+            const comment = "Please make sure to read the project [coding specification document](https://github.com/hrhszsdtc/AutoDownloader_Bot/blob/main/doc/coding_standards.md) carefully";
+            github.rest.issues.createComment({ owner, repo, issue_number: number, body: comment });
