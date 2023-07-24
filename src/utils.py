@@ -93,5 +93,5 @@ def pok(string):
     info(string)
 
 def feedback():
-    sys.stdout.write(feedback_notice)
+    sys.stdout.write(constants.feedback_notice)
 

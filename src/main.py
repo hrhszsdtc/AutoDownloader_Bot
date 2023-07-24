@@ -14,39 +14,8 @@ from urllib.parse import urlparse
 from constants import *
 from utils import *
 from gui import *
+from SpiderZFramework import *
 
-# 域名映射字典
-DN = {
-    "bilibili": ("bilibili.com", "www.bilibili.com", "b23.tv"),
-    "iqiyi": ("www.iqiyi.com", "iqiyi.com"),
-}
-DOMAIN_NAME = {x: k for k, v in DN.items() for x in v}
-
-# 解析url
-def un_pack(url):
-    sys.stdout.write("\n")
-    utils.pout(f"正在解析:[{url}]")
-
-    # 解析url,打印分析出的域名
-    domain = urlparse(url).netloc
-    print(f"    domain:{domain}")
-    if domain in DOMAIN_NAME:
-        try:
-            domain_name = DOMAIN_NAME[domain]
-            # 调用爬虫脚本
-            proc = subprocess.Popen(
-                [PYTHON_COM, f"/script/{domain}.py", url], shell=True
-            )
-            proc.wait()
-        except KeyboardInterrupt:
-            proc.terminate()
-            return
-        except Exception as e:
-            utils.perror(e)
-            return
-    else:
-        utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
-        return
 
 
 # 主程序
@@ -57,6 +26,7 @@ def main(mode, *url):
         url = ""
 
         # 主界面
+        sys.stdout.write(f"{cutline}\n{copyright_notice}\n{cutline}\n")  # 打印版权信息
         print("\t:)Tip:输入exit退出,输入url地址开始爬取")
         while True:
             flag = 1
