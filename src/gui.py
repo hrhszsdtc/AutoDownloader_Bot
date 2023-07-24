@@ -21,8 +21,6 @@ class GUI(tk.Frame):
         self.sub_frame = tk.Frame(self)
         # 创建一个文本框
         self.text = tk.Text(self.sub_frame)
-        # 添加版权信息
-        self.text.insert(tk.INSERT, copyright_notice)
         # 创建一个滚动条
         self.scroll = tk.Scrollbar(self.sub_frame)
         # 设置滚动条的滚动范围
