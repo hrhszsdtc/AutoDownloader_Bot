@@ -59,6 +59,7 @@ def main(mode, *url):
             # 周期结束,打印分割线
             print(cutline2)
 
+
 def start(mode):
     command = ["nogui", "gui"]
 
@@ -86,7 +87,7 @@ def start(mode):
     else:
         start_gui()
 
-
+        
 if __name__ == "__main__":
     try:
         model = sys.argv[1]
