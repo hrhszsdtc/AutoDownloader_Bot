@@ -11,8 +11,8 @@ import urllib
 import urllib.request
 from urllib.parse import urlparse
 
-import constants
-import utils
+from constants import *
+from utils import *
 
 # 域名映射字典
 DN = {
@@ -20,43 +20,6 @@ DN = {
     "iqiyi": ("www.iqiyi.com", "iqiyi.com"),
 }
 DOMAIN_NAME = {x: k for k, v in DN.items() for x in v}
-
-
-# 取得网页源代码
-def get_content(url_path):
-    try:
-        opener = urllib.request.build_opener()
-
-        # 将伪装成的浏览器添加到对应的http头部
-        opener.addheaders = [HEADERS]
-
-        # 读取相应的url
-        read_contend = opener.open(url_path).read()
-
-        # 将获得的html解码为utf-8
-        data = read_contend.decode("utf-8")
-
-        # 打印源代码
-        print(data)
-
-    except Exception as e:
-        utils.pwarm(e)
-
-
-# 用于获得HTTP响应头和JSON数据
-def get_request(url):
-    try:
-        with urllib.request.urlopen(url) as f:
-            data = f.read()
-            print(f"Status:{f.status} {f.reason}")
-
-            for k, v in f.getheaders():
-                print(f"{k}: {v}")
-        print(f"Data:{data.decode('utf-8')}")
-
-    except Exception as e:
-        utils.pwarm(e)
-
 
 # 解析url
 def un_pack(url):
@@ -126,55 +89,6 @@ def main(mode, *url):
             # 周期结束,打印分割线
             print(cutline2)
 
-
-# GUI界面
-class GUI(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.master.title("AD_B by hrhszsdtc")
-        self.pack()
-        self.create_widgets()
-
-    def create_widgets(self):
-        self.sub_frame = tk.Frame(self)
-        self.text = tk.Text(self.sub_frame)
-        self.text.insert(tk.INSERT, copyright_notice)
-        self.scroll = tk.Scrollbar(self.sub_frame)
-        self.text.config(yscrollcommand=self.scroll.set)
-        self.scroll.config(command=self.text.yview)
-        self.text.grid(row=0, column=0, sticky="nsew")
-        self.scroll.grid(row=0, column=1, sticky="ns")
-        self.sub_frame.grid(row=0, column=0, columnspan=2, sticky="nsew")
-
-        self.label = tk.Label(
-            self, text="Type in the URL,press <Enter> to start and <Ctrl+C> to end."
-        )
-        self.label.grid(row=1)
-
-        self.url_entry = tk.Entry(self)
-        self.url_entry.grid(row=2)
-
-        self.url_entry.bind("<Return>", lambda event: un_pack(self.url_entry.get()))
-
-
-class PrintToText:
-    def __init__(self, text):
-        self.text = text
-
-    def write(self, s):
-        self.text.insert(tk.END, s)
-        self.text.see(tk.END)
-        self.text.update()
-
-
-def start_gui():
-    root = tk.Tk()
-    gui = GUI(master=root)
-    ptt = PrintToText(gui.text)
-    with contextlib.redirect_stdout(ptt), contextlib.redirect_stderr(ptt):
-        gui.master.mainloop()
-
 def start(mode):
     command = ["nogui", "gui"]
 
@@ -204,5 +118,10 @@ def start(mode):
 
 
 if __name__ == "__main__":
-    model = input("请输入模式(nogui/gui):")
-    start(model)
+    try:
+        model = sys.argv[1]
+    except Exception as e:
+        utils.pwarm(e)
+        model = "nogui"
+    finally:
+        start(model)
