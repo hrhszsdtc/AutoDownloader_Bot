@@ -24,7 +24,3 @@ Python == 3.11.x
 ## 联系作者
 
 `tech-whimsy(at)outlook.com`
-
-## 版权声明
-
-*Copyright (C) 2023 hrhszsdtc*
