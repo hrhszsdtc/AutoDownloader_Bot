@@ -13,6 +13,7 @@ from urllib.parse import urlparse
 
 from constants import *
 from utils import *
+from gui import *
 
 # 域名映射字典
 DN = {
