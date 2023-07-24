@@ -92,6 +92,6 @@ def pok(string):
         print(f"[ ok ]{string}")
     info(string)
 
-def feedback():
-    sys.stdout.write(constants.feedback_notice)
 
+def feedback():
+    sys.stdout.write(feedback_notice)

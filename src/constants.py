@@ -30,7 +30,7 @@ except AttributeError as e:
     sys.exit(-1)
 
 # UserAgent
-with open("config/user_agents.txt", "r", encoding='utf-8') as f:
+with open("config/user_agents.txt", "r", encoding="utf-8") as f:
     HEADERS = f.readlines()
     HEADER = random.choice(HEADERS)
 

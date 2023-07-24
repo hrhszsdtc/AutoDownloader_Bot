@@ -11,11 +11,10 @@ import urllib
 import urllib.request
 from urllib.parse import urlparse
 
-from constants import *
-from utils import *
-from gui import *
-from SpiderZFramework import *
-
+import constants
+import utils
+import gui
+import spider_api
 
 
 # 主程序
@@ -65,7 +64,7 @@ def start(mode):
 
     if mode == "gui":
         try:
-            start_gui()
+            gui.start_gui()
 
         except Exception as e:
             sys.stdout.write(f"{e}\n:)程序非正常退出,可能是崩溃了!")
@@ -82,17 +81,12 @@ def start(mode):
 
     elif not (mode in command):
         utils.pwarm(f"没有叫做{mode}的模式!")
-        start_gui()
+        gui.start_gui()
 
     else:
-        start_gui()
+        sui.start_gui()
 
-        
+
 if __name__ == "__main__":
-    try:
-        model = sys.argv[1]
-    except Exception as e:
-        utils.pwarm(e)
-        model = "nogui"
-    finally:
-        start(model)
+    model = input("请输入模式(gui/nogui):")
+    start(model)

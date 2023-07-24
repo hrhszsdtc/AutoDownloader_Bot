@@ -4,9 +4,10 @@ import subprocess
 import contextlib
 import os
 
-from constants import *
-from utils import *
-from SpiderZFramework import *
+import constants
+import utils
+import spider_api
+
 
 # GUI界面
 class GUI(tk.Frame):
@@ -49,7 +50,7 @@ class GUI(tk.Frame):
         self.url_entry.grid(row=2)
 
         # 绑定输入框的回车事件
-        self.url_entry.bind("<Return>", lambda event: un_pack(self.url_entry.get()))
+        self.url_entry.bind("<Return>", lambda event: spider_api.un_pack(self.url_entry.get()))
 
 
 class PrintToText:
@@ -77,5 +78,3 @@ def start_gui():
     with contextlib.redirect_stdout(ptt), contextlib.redirect_stderr(ptt):
         # 运行GUI实例
         gui.master.mainloop()
-
-
