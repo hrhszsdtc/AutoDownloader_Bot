@@ -56,7 +56,6 @@ def main(mode, *url):
         url = ""
 
         # 主界面
-        sys.stdout.write(f"{cutline}\n{copyright_notice}\n{cutline}\n")  # 打印版权信息
         print("\t:)Tip:输入exit退出,输入url地址开始爬取")
         while True:
             flag = 1
