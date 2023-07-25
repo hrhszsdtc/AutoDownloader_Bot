@@ -84,7 +84,7 @@ def start(mode):
         gui.start_gui()
 
     else:
-        sui.start_gui()
+        gui.start_gui()
 
 
 if __name__ == "__main__":
