@@ -14,15 +14,7 @@ feedback_notice = "请联系hrhszdtc团队(https://github.com/hrhszsdtc)并发�
 
 script_path = os.path.abspath(__file__)
 script_folder = os.path.dirname(script_path)
-script_name = os.path.basename(script_folder)
-if script_name == "src":
-    pass
-else:
-    src_path = os.path.join(script_path, "src")
-    if os.path.exists(src_path):
-        os.chdir(src_path)
-    else:
-        raise FileNotFoundError("src folder not found")
+os.chdir(script_folder)
 
 try:
     PYTHON_COM = sys.executable
@@ -31,7 +23,7 @@ except AttributeError as e:
     sys.exit(-1)
 
 # UserAgent
-with open("config/user_agents.txt", "r", encoding='utf-8') as f:
+with open("config/user_agents.txt", "r", encoding="utf-8") as f:
     HEADERS = f.readlines()
     HEADER = random.choice(HEADERS)
 
