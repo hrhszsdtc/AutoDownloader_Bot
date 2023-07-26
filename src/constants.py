@@ -6,13 +6,6 @@ import sys
 
 import utils
 
-# 域名映射字典
-DN = {
-    "bilibili": ("bilibili.com", "www.bilibili.com", "b23.tv"),
-    "iqiyi": ("www.iqiyi.com", "iqiyi.com"),
-}
-DOMAIN_NAME = {x: k for k, v in DN.items() for x in v}
-
 # 版权信息
 copyright_notice = "Copyright (C) 2023 hrhszsdtc"
 

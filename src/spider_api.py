@@ -1,5 +1,3 @@
-# !usr/bin/python3
-# -*- coding:UTF-8 -*-
 import os
 import signal
 import subprocess
@@ -12,33 +10,6 @@ from urllib.parse import urlparse
 
 import constants
 import utils
-
-
-# 解析url
-def un_pack(url):
-    sys.stdout.write("\n")
-    utils.pout(f"正在解析:[{url}]")
-
-    # 解析url,打印分析出的域名
-    domain = urlparse(url).netloc
-    print(f"    domain:{domain}")
-    if domain in constants.DOMAIN_NAME:
-        try:
-            domain_name = constants.DOMAIN_NAME[domain]
-            # 调用爬虫脚本
-            proc = subprocess.Popen(
-                [PYTHON_COM, f"/script/{domain}.py", url], shell=True
-            )
-            proc.wait()
-        except KeyboardInterrupt:
-            proc.terminate()
-            return
-        except Exception as e:
-            utils.perror(e)
-            return
-    else:
-        utils.pwarm(f"抱歉,该域名下({domain}) from ({url})的资源暂时不支持爬取")
-        return
 
 
 # https操作库
