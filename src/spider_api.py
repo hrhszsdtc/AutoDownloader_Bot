@@ -1,3 +1,5 @@
+# Copyright (C) 2023 hrhszsdtc
+
 import os
 import signal
 import subprocess
