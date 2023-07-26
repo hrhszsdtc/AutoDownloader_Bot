@@ -1,7 +1,5 @@
-[branch main]
+main/src/other/* @hrh233 @Glodtsual @CoderWharf
 
-/src/other/ @hrh233 @Glodtsual @CoderWharf
+main/src/* @hrh233 @Glodtsual
 
-/src/ @hrh233 @Glodtsual
-
-* @hrh233
+main/* @hrh233
