@@ -2,6 +2,7 @@
 
 import contextlib
 import os
+import pyinputplus as pyip
 import signal
 import subprocess
 import sys
@@ -35,7 +36,7 @@ def un_pack(url):
             domain_name = DOMAIN_NAME[domain]
             # 调用爬虫脚本
             proc = subprocess.Popen(
-                [PYTHON_COM, f"/script/{domain}.py", url], shell=True
+                [constants.PYTHON_COM, f"/script/{domain}.py", url], shell=True
             )
             proc.wait()
         except KeyboardInterrupt:
@@ -106,7 +107,7 @@ class GUI(tk.Frame):
         # 创建一个文本框
         self.text = tk.Text(self.sub_frame)
         # 添加版权信息
-        self.text.insert(tk.INSERT, copyright_notice)
+        self.text.insert(tk.INSERT, constants.copyright_notice)
         # 创建一个滚动条
         self.scroll = tk.Scrollbar(self.sub_frame)
         # 设置滚动条的滚动范围
@@ -163,7 +164,6 @@ def start_gui():
 
 
 def start(mode):
-    command = ["nogui", "gui"]
 
     if mode == "gui":
         try:
@@ -182,14 +182,7 @@ def start(mode):
             sys.stdout.write(f"{e}\n:)程序非正常退出,可能是崩溃了!")
             utils.feedback()
 
-    elif not (mode in command):
-        utils.pwarm(f"没有叫做{mode}的模式!")
-        start_gui()
-
-    else:
-        start_gui()
-
 
 if __name__ == "__main__":
-    model = input("请输入模式(nogui/gui):")
+    model = pyip.inputChoice(["gui","nogui"], prompt="请输入模式(nogui/gui):")
     start(model)
