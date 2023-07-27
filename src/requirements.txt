@@ -1,1 +1,2 @@
-jsbeautifier==1.14.8
+jsbeautifier==1.14.9
+PyInputPlus==0.2.12
