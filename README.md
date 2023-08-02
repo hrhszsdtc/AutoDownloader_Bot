@@ -12,4 +12,4 @@
 
 ## 版权声明
 
-*Copyright (C) 2023 hrhszsdtc All Rights Reserved.*
+*Copyright (C) hrhszsdtc All Rights Reserved.*
