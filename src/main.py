@@ -99,7 +99,12 @@ class GUI(ttk.Frame):
         super().__init__(master)
         self.master = master
         self.master.title("AD_B by hrhszsdtc")
-        self.pack()
+        scriptpath = os.path.abspath(__file__)
+        scriptdir = os.path.dirname(scriptpath)
+        imagepath = os.path.join(scriptdir, "icon.png")
+        img = tk.PhotoImage(file=imagepath)
+        self.master.call("wm", "iconphoto", self.master._w, img)
+        self.grid()
         self.create_widgets()
 
     def create_widgets(self):
