@@ -165,7 +165,6 @@ def start_gui():
 
 
 def start(mode):
-
     if mode == "gui":
         try:
             start_gui()
@@ -185,5 +184,5 @@ def start(mode):
 
 
 if __name__ == "__main__":
-    model = pyip.inputChoice(["gui","nogui"], prompt="请输入模式(nogui/gui):")
+    model = pyip.inputChoice(["gui", "nogui"], prompt="请输入模式(nogui/gui):")
     start(model)
