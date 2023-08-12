@@ -8,6 +8,7 @@ import subprocess
 import sys
 import time
 import tkinter as tk
+from tkinter import ttk
 import urllib
 import urllib.request
 from urllib.parse import urlparse
@@ -93,7 +94,7 @@ def main(mode, *url):
 
 
 # GUI界面
-class GUI(tk.Frame):
+class GUI(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
@@ -103,13 +104,13 @@ class GUI(tk.Frame):
 
     def create_widgets(self):
         # 创建一个子窗口
-        self.sub_frame = tk.Frame(self)
+        self.sub_frame = ttk.Frame(self)
         # 创建一个文本框
         self.text = tk.Text(self.sub_frame)
         # 添加版权信息
         self.text.insert(tk.INSERT, constants.copyright_notice)
         # 创建一个滚动条
-        self.scroll = tk.Scrollbar(self.sub_frame)
+        self.scroll = ttk.Scrollbar(self.sub_frame)
         # 设置滚动条的滚动范围
         self.text.config(yscrollcommand=self.scroll.set)
         # 设置滚动条的滚动事件
@@ -121,14 +122,14 @@ class GUI(tk.Frame):
         self.sub_frame.grid(row=0, column=0, columnspan=2, sticky="nsew")
 
         # 创建一个标签
-        self.label = tk.Label(
+        self.label = ttk.Label(
             self, text="Type in the URL,press <Enter> to start and <Ctrl+C> to end."
         )
         # 将标签放入窗口中
         self.label.grid(row=1)
 
         # 创建一个输入框
-        self.url_entry = tk.Entry(self)
+        self.url_entry = ttk.Entry(self)
         # 将输入框放入窗口中
         self.url_entry.grid(row=2)
 
