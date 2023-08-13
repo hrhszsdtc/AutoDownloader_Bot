@@ -10,7 +10,7 @@
 
 ## Markdown风格规范
 
-关于本仓库中的说明文档,请遵守[GitHub风格的Markdown规范](https://github.github.com/gfm/).
+关于本仓库中的说明文档,请遵守[GitHub式Markdown规范](https://github.github.com/gfm/),[基本撰写和格式语法](https://docs.github.com/zh/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)以及[使用高级格式](https://docs.github.com/zh/get-started/writing-on-github/working-with-advanced-formatting).
 
 ## 其他要求
 
